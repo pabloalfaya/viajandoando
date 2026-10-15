@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import Boton from "../../components/Boton.astro";
 import Forma from "../../components/Forma.astro";
 import TarjetaViaje from "../../components/TarjetaViaje.astro";
-import { instagramUrl } from "../../config/site";
+import { SITE, instagramUrl } from "../../config/site";
 import { getViajes } from "../../lib/viajes";
 
 const viajes = await getViajes();
@@ -29,8 +29,11 @@ const COLORES = ["verde", "azul", "rojo"] as const;
       </div>
 
       <div class="listado__mas">
-        <p>¿No ves tu destino? Sígueme en Instagram y te aviso cuando salga un viaje nuevo.</p>
-        <Boton href={instagramUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">Sígueme en Instagram</Boton>
+        <p>¿No ves tu destino? Únete a la comunidad de WhatsApp y te aviso cuando salga un viaje nuevo.</p>
+        <div class="botones">
+          <Boton href={SITE.whatsappComunidad} icono="whatsapp" target="_blank" rel="noopener">Únete a la comunidad</Boton>
+          <Boton href={instagramUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">Sígueme en Instagram</Boton>
+        </div>
       </div>
     </div>
   </section>

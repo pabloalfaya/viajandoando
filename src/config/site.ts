@@ -19,6 +19,9 @@ export const SITE = {
   // WhatsApp con prefijo y sin espacios ni + (+34 673 62 83 34).
   whatsapp: "34673628334" as string | null,
 
+  // Comunidad de WhatsApp (avisos de nuevos viajes).
+  whatsappComunidad: "https://chat.whatsapp.com/C0FuMqL1y60A1ZHHMz0Gyt",
+
   // TODO: email de contacto.
   email: null as string | null,
 

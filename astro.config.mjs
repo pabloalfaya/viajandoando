@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
 // TODO: mantener sincronizado con SITE.dominio (src/config/site.ts) cuando haya dominio.
-const DOMINIO = "https://dominio-pendiente.example";
+const DOMINIO = "https://viajandoando-seven.vercel.app";
 const NOINDEX = ["/aviso-legal/", "/privacidad/", "/cookies/", "/404/"];
 
 export default defineConfig({

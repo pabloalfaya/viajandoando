@@ -7,8 +7,9 @@ export const SITE = {
   descripcion:
     "Viajes en grupo para gente que no se conoce: Marruecos y más destinos, con todo organizado. Desconocidos al salir, anécdotas al volver.",
 
-  // TODO: dominio definitivo (con https:// y sin barra final). Afecta a canonical, sitemap y Open Graph.
-  dominio: "https://dominio-pendiente.example",
+  // Dominio (con https:// y sin barra final). Afecta a canonical, sitemap y Open Graph.
+  // TODO: cambiar por el dominio propio cuando lo haya (y también en astro.config.mjs).
+  dominio: "https://viajandoando-seven.vercel.app",
 
   // Usuario de Instagram, sin la @.
   instagram: "viajandoand013" as string | null,

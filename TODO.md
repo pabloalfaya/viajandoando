@@ -3,7 +3,7 @@
 Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio muy pronto», el CTA «Avísame por Instagram» y el enlace a instagram.com sin usuario.
 
 ## Configuración (`src/config/site.ts`)
-- [ ] **Dominio** definitivo (`SITE.dominio`). Cámbialo también en `astro.config.mjs` (`DOMINIO`). Afecta a canonical, sitemap, robots.txt y Open Graph.
+- [ ] **Dominio propio**: ahora se usa https://viajandoando-seven.vercel.app. Si se compra dominio, cambiar `SITE.dominio` y `DOMINIO` en `astro.config.mjs`.
 - [x] Instagram: viajandoand013 (hecho).
 - [x] WhatsApp: +34 673 62 83 34 (hecho). Botón fijo abajo a la derecha en todas las páginas. Si se quiere que el botón «Reserva tu plaza» lleve a WhatsApp en vez de a Instagram: `SITE.reservaVia = "whatsapp"`.
 - [ ] **Email** de contacto (`SITE.email`).
@@ -33,7 +33,7 @@ Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio
 - [ ] La tabla del encargo no cuadraba con los archivos. Se han usado según su contenido real:
   - `23.28.41.jpeg` es la **puerta de la mezquita** (no el callejón). Se recorta para que la señora sentada no salga: `amalia-puerta-mezquita-recorte.jpg`.
   - `23.28.42.jpeg` es el **callejón de la medina con el gato** → foto de «Quién soy».
-  - `23.28.47.jpeg` **no es el grupo**: es un retrato de perfil en una playa (`retrato-playa.jpg`). No se usa: ¿es Amalia? ¿Se quiere usar?
+  - `23.28.47.jpeg` **no es el grupo**: es un retrato de perfil en una playa (`retrato-playa.jpg`). No se usa.
   - `23.28.47 (1).jpeg` **no es un duplicado**: es el grupo de 5 en Teguise → se usa en «Cómo son».
   - El vídeo de los camellos es **horizontal** (832×464), no vertical. La portada lo usa a sangre en todas las anchuras.
 - [ ] Para un viaje que no sea a Marruecos, añadir fotos de ese destino (Turquía usa ahora una foto de Budapest, solo de prueba).

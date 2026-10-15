@@ -19,15 +19,19 @@ precio: 450
 # deposito: 0               # TODO
 # plazas: 0                 # TODO
 # alojamiento: ""           # TODO
-portada: ../../assets/fotos/amalia-puerta-mezquita-recorte.jpg
+portada: ../../assets/fotos/amalia-mono-furgoneta.jpg
 galeria:
   - ../../assets/fotos/amalia-medina-marrakech.jpg
-  - ../../assets/fotos/hero-camellos-poster.jpg
   - ../../assets/fotos/quads-agafay.jpg
+  - ../../assets/fotos/amalia-azulejos.jpg
+  - ../../assets/fotos/hero-camellos-poster.jpg
+  - ../../assets/fotos/amalia-puerta-mezquita-recorte.jpg
 galeriaAlt:
   - Amalia en un callejón de la medina de Marrakech, con una bici y un gato
-  - Amalia frente a una fila de camellos en el desierto
   - Quads aparcados en fila en el desierto de Agafay
+  - Amalia sentada frente a una pared de azulejos de colores
+  - Amalia frente a una fila de camellos en el desierto
+  - Amalia apoyada en una gran puerta de madera con remaches en Marrakech
 video:
   src: /video/cascadas-ouzoud.mp4
   poster: ../../assets/fotos/cascadas-ouzoud-poster.jpg

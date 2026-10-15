@@ -1,0 +1,100 @@
+---
+// Tarjetas de viajes en preparación (surf camp, trekking, destinos sorpresa) con barra «cargando».
+import { SITE } from "../config/site";
+import { PROXIMAMENTE } from "../data/proximamente";
+import Icono from "./Icono.astro";
+
+interface Props {
+  titulo?: boolean;
+}
+const { titulo = true } = Astro.props;
+---
+
+<div class="cargando">
+  {
+    titulo && (
+      <div class="cargando__titulo">
+        <p class="eyebrow">En preparación</p>
+        <h2>Más aventuras <span class="acento">cargando</span></h2>
+      </div>
+    )
+  }
+  <ul class="cargando__lista">
+    {
+      PROXIMAMENTE.map((p, i) => (
+        <li class="cargando__item" style={`--c: var(--${p.color}); --retraso: ${i * -0.6}s`}>
+          <span class="cargando__icono"><Icono nombre={p.icono} tam={28} /></span>
+          <h3>{p.nombre}</h3>
+          <div class="cargando__barra" role="progressbar" aria-label={`${p.nombre}: cargando`} aria-valuetext="Cargando">
+            <span />
+          </div>
+          <p class="cargando__texto">
+            Cargando<span class="cargando__puntos" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+  {
+    SITE.whatsappComunidad && (
+      <p class="cargando__aviso">
+        ¿Quieres enterarte antes que nadie?{" "}
+        <a href={SITE.whatsappComunidad} target="_blank" rel="noopener">
+          Únete a la comunidad de WhatsApp
+        </a>
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .cargando__titulo { margin: 0 0 1.5rem; }
+  .cargando__titulo h2 { margin: 0; }
+  .cargando__lista {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .cargando__item {
+    display: grid; gap: .75rem; align-content: start;
+    padding: 1.5rem;
+    background: var(--papel);
+    border: 1.5px dashed var(--c);
+    border-radius: var(--radio);
+  }
+  .cargando__icono {
+    display: grid; place-items: center;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--c); color: var(--crema);
+  }
+  .cargando__item h3 { margin: 0; text-transform: uppercase; font-weight: 600; }
+  .cargando__barra {
+    position: relative; height: 12px; overflow: hidden;
+    border: 1.5px solid var(--tinta); border-radius: var(--radio-pill);
+    background: var(--crema);
+  }
+  .cargando__barra span {
+    position: absolute; inset: 0 auto 0 0; width: 40%;
+    background: var(--c); border-radius: var(--radio-pill);
+    animation: carga 2.2s ease-in-out infinite;
+    animation-delay: var(--retraso);
+  }
+  .cargando__texto { margin: 0; font-size: var(--t-s); font-weight: 600; color: var(--tinta-2); text-transform: uppercase; letter-spacing: .12em; }
+  .cargando__puntos span { animation: punto 1.4s infinite; opacity: .2; }
+  .cargando__puntos span:nth-child(2) { animation-delay: .2s; }
+  .cargando__puntos span:nth-child(3) { animation-delay: .4s; }
+  .cargando__aviso { margin: 1.25rem 0 0; color: var(--tinta-2); }
+  .cargando__aviso a { font-weight: 600; }
+  @keyframes carga {
+    0% { left: -40%; }
+    100% { left: 100%; }
+  }
+  @keyframes punto {
+    0%, 100% { opacity: .2; }
+    40% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cargando__barra span { animation: none; left: 0; width: 60%; }
+    .cargando__puntos span { animation: none; opacity: 1; }
+  }
+</style>

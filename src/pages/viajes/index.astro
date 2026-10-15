@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import Boton from "../../components/Boton.astro";
 import Forma from "../../components/Forma.astro";
 import TarjetaViaje from "../../components/TarjetaViaje.astro";
+import Cargando from "../../components/Cargando.astro";
 import { SITE, instagramUrl } from "../../config/site";
 import { getViajes } from "../../lib/viajes";
 
@@ -24,8 +25,13 @@ const COLORES = ["verde", "azul", "rojo"] as const;
         destino. Yo preparo el plan. Y juntos vemos qué historias salen de ahí.
       </p>
 
+      <h2 class="sr-only">Viajes con fechas</h2>
       <div class="listado__rejilla">
         {viajes.map((v, i) => <TarjetaViaje viaje={v} color={COLORES[i % COLORES.length]} />)}
+      </div>
+
+      <div class="listado__preparacion">
+        <Cargando />
       </div>
 
       <div class="listado__mas">
@@ -49,6 +55,7 @@ const COLORES = ["verde", "azul", "rojo"] as const;
     gap: 3rem 2.5rem;
     margin-top: 3.5rem;
   }
+  .listado__preparacion { margin-top: 4rem; }
   .listado__mas {
     margin-top: 4rem; padding-top: 2rem; border-top: 2px solid var(--tinta);
     display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between;

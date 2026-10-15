@@ -3,6 +3,7 @@
 // Orden del menú = orden de las secciones de la home; «Internet en el viaje» es página aparte.
 import { instagramUrl } from "../config/site";
 import { ESTADO, fechasCortas, getViajes } from "../lib/viajes";
+import { PROXIMAMENTE } from "../data/proximamente";
 import Icono from "./Icono.astro";
 import Logo from "./Logo.astro";
 
@@ -55,6 +56,15 @@ const enViajes = ruta.startsWith("/viajes/");
                   </li>
                 );
               })
+            }
+            {
+              PROXIMAMENTE.map((p) => (
+                <li class="sub__cargando">
+                  <span class="sub__titulo">{p.nombre}</span>
+                  <span class="sub__fechas">Cargando…</span>
+                  <span class="sub__barra" style={`--c: var(--${p.color})`} aria-hidden="true"><span /></span>
+                </li>
+              ))
             }
             <li><a href="/viajes/" class="sub__todos" aria-current={ruta === "/viajes/" ? "page" : undefined}>Ver todos los viajes →</a></li>
           </ul>
@@ -138,6 +148,11 @@ const enViajes = ruta.startsWith("/viajes/");
   .sub__titulo { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
   .sub__fechas { font-family: var(--f-body); font-size: var(--t-s); color: var(--tinta-2); }
   .cabecera__nav .sub__todos { font-weight: 600; color: var(--azul); }
+  .sub__cargando { display: grid; gap: .1rem; padding-block: .5rem; opacity: .85; cursor: default; }
+  .sub__barra { position: relative; display: block; width: 120px; height: 6px; margin-top: .25rem; overflow: hidden; border-radius: var(--radio-pill); background: var(--linea); }
+  .sub__barra span { position: absolute; inset: 0 auto 0 0; width: 40%; background: var(--c); border-radius: var(--radio-pill); animation: carga-menu 2.2s ease-in-out infinite; }
+  @keyframes carga-menu { 0% { left: -40%; } 100% { left: 100%; } }
+  @media (prefers-reduced-motion: reduce) { .sub__barra span { animation: none; width: 60%; } }
 
   /* Móvil: panel desplegable */
   @media (max-width: 959px) {

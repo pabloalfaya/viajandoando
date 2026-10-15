@@ -5,6 +5,7 @@ import Boton from "../components/Boton.astro";
 import Forma from "../components/Forma.astro";
 import Preguntas from "../components/Preguntas.astro";
 import ViajeSeccion from "../components/ViajeSeccion.astro";
+import Cargando from "../components/Cargando.astro";
 import { SITE, instagramAmaliaUrl, instagramUrl } from "../config/site";
 import { PREGUNTAS, faqJsonLd } from "../data/preguntas";
 import { getViajes } from "../lib/viajes";
@@ -291,6 +292,11 @@ const jsonLd = [
     </div>
   </section>
   {viajes.map((v) => <ViajeSeccion viaje={v} />)}
+  <section class="seccion preparacion" aria-label="Viajes en preparación">
+    <div class="contenedor">
+      <Cargando />
+    </div>
+  </section>
 
   <section class="seccion galeria" aria-labelledby="galeria-titulo">
     <div class="contenedor">
@@ -457,6 +463,9 @@ const jsonLd = [
   @media (min-width: 960px) {
     .aventuras__intro { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; }
   }
+
+  /* En preparación */
+  .preparacion { padding-bottom: 0; }
 
   /* Galería */
   .galeria { padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }

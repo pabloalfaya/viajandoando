@@ -1,17 +1,14 @@
 ---
 // Cabecera flotante en píldora. Sin enlaces externos salvo Instagram (nunca Glowi).
+// Orden del menú = orden de las secciones de la home; «Internet en el viaje» es página aparte.
 import { instagramUrl } from "../config/site";
+import { ESTADO, fechasCortas, getViajes } from "../lib/viajes";
 import Icono from "./Icono.astro";
 import Logo from "./Logo.astro";
 
-const MENU = [
-  { texto: "Quién soy", href: "/#quien-soy" },
-  { texto: "Viajes", href: "/#viajes" },
-  { texto: "Cómo son", href: "/#como-son" },
-  { texto: "Internet en el viaje", href: "/internet-en-el-viaje/" },
-  { texto: "Preguntas", href: "/#preguntas" },
-];
+const viajes = await getViajes();
 const ruta = Astro.url.pathname;
+const enViajes = ruta.startsWith("/viajes/");
 ---
 
 <header class="cabecera">
@@ -31,16 +28,41 @@ const ruta = Astro.url.pathname;
       <Icono nombre="cerrar" class="i-cerrar" />
     </button>
     <nav id="menu-principal" class="cabecera__nav" aria-label="Principal" data-menu>
-      <ul>
-        {
-          MENU.map((m) => (
-            <li>
-              <a href={m.href} aria-current={ruta === m.href ? "page" : undefined}>
-                {m.texto}
-              </a>
-            </li>
-          ))
-        }
+      <ul class="cabecera__lista">
+        <li><a href="/#quien-soy">Quién soy</a></li>
+        <li><a href="/#como-son">Cómo son</a></li>
+        <li class="sub">
+          <button
+            type="button"
+            class:list={["sub__boton", { "sub__boton--actual": enViajes }]}
+            aria-expanded="false"
+            aria-controls="submenu-viajes"
+            data-sub-boton
+          >
+            Próximos viajes
+            <svg class="sub__flecha" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+          </button>
+          <ul id="submenu-viajes" class="sub__lista" data-sub>
+            {
+              viajes.map((v) => {
+                const href = `/viajes/${v.id}/`;
+                return (
+                  <li>
+                    <a href={href} class="sub__viaje" aria-current={ruta === href ? "page" : undefined}>
+                      <span class="sub__titulo">{v.data.titulo}</span>
+                      <span class="sub__fechas">{fechasCortas(v.data) ?? "Fechas muy pronto"} · {ESTADO[v.data.estado]}</span>
+                    </a>
+                  </li>
+                );
+              })
+            }
+            <li><a href="/viajes/" class="sub__todos" aria-current={ruta === "/viajes/" ? "page" : undefined}>Ver todos los viajes →</a></li>
+          </ul>
+        </li>
+        <li><a href="/#preguntas">Preguntas</a></li>
+        <li>
+          <a href="/internet-en-el-viaje/" aria-current={ruta === "/internet-en-el-viaje/" ? "page" : undefined}>Internet en el viaje</a>
+        </li>
         <li class="cabecera__ig">
           <a href={instagramUrl} target="_blank" rel="noopener">
             <Icono nombre="instagram" titulo="Instagram de Viajando Ando" />
@@ -100,6 +122,23 @@ const ruta = Astro.url.pathname;
   }
   .cabecera__nav a:hover, .cabecera__nav a[aria-current="page"] { color: var(--rojo); }
 
+  /* Submenú «Próximos viajes» */
+  .sub { position: relative; }
+  .sub__boton {
+    display: flex; align-items: center; gap: .4rem;
+    min-height: 48px; padding: 0;
+    border: 0; background: none; cursor: pointer;
+    color: var(--tinta); font: inherit;
+  }
+  .sub__boton:hover, .sub__boton--actual { color: var(--rojo); }
+  .sub__flecha { transition: rotate .2s ease; }
+  .sub__boton[aria-expanded="true"] .sub__flecha { rotate: 180deg; }
+  .sub__lista:not([data-abierto]) { display: none; }
+  .cabecera__nav .sub__viaje { display: grid; gap: .1rem; align-content: center; padding-block: .5rem; }
+  .sub__titulo { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+  .sub__fechas { font-family: var(--f-body); font-size: var(--t-s); color: var(--tinta-2); }
+  .cabecera__nav .sub__todos { font-weight: 600; color: var(--azul); }
+
   /* Móvil: panel desplegable */
   @media (max-width: 959px) {
     .cabecera__nav {
@@ -114,14 +153,28 @@ const ruta = Astro.url.pathname;
     }
     .cabecera__nav:not([data-abierto]) { display: none; }
     .cabecera__nav li + li { border-top: 1px solid var(--linea); }
-    .cabecera__nav a { font-family: var(--f-display); font-size: 1.45rem; padding-block: .45rem; }
+    .cabecera__lista > li > a, .sub__boton { font-family: var(--f-display); font-size: 1.45rem; padding-block: .45rem; width: 100%; }
+    .cabecera__nav .sub__lista { padding: 0 0 .75rem 1rem; border-left: 3px solid var(--rojo); margin-left: .25rem; }
+    .sub__lista li + li { border-top: 0; }
+    .sub__titulo { font-size: 1.1rem; }
   }
 
   /* Escritorio */
   @media (min-width: 960px) {
     .cabecera__boton { display: none; }
-    .cabecera__nav ul { display: flex; align-items: center; gap: 1.6rem; }
-    .cabecera__nav a { font-size: var(--t-s); font-weight: 500; }
+    .cabecera__lista { display: flex; align-items: center; gap: 1.6rem; }
+    .cabecera__lista > li > a, .sub__boton { font-size: var(--t-s); font-weight: 500; }
+    .cabecera__nav .sub__lista {
+      position: absolute; top: calc(100% + 12px); left: 50%; translate: -50% 0;
+      width: max-content; min-width: 260px;
+      padding: .5rem 1rem;
+      background: var(--papel);
+      border: 1px solid var(--linea);
+      border-top: 3px solid var(--rojo);
+      border-radius: var(--radio);
+    }
+    .sub__lista li + li { border-top: 1px solid var(--linea); }
+    .sub__titulo { font-size: 1rem; }
     .cabecera__ig a {
       justify-content: center;
       width: 48px; border-radius: 50%;
@@ -137,23 +190,49 @@ const ruta = Astro.url.pathname;
   const boton = document.querySelector<HTMLButtonElement>("[data-menu-boton]");
   const menu = document.querySelector<HTMLElement>("[data-menu]");
   const texto = document.querySelector<HTMLElement>("[data-menu-texto]");
+  // Submenú «Próximos viajes»
+  const subBoton = document.querySelector<HTMLButtonElement>("[data-sub-boton]");
+  const sub = document.querySelector<HTMLElement>("[data-sub]");
+  const fijarSub = (abierto: boolean) => {
+    subBoton?.setAttribute("aria-expanded", String(abierto));
+    sub?.toggleAttribute("data-abierto", abierto);
+  };
+  const subAbierto = () => subBoton?.getAttribute("aria-expanded") === "true";
+  subBoton?.addEventListener("click", () => fijarSub(!subAbierto()));
+  document.addEventListener("click", (e) => {
+    const t = e.target as HTMLElement;
+    if (subAbierto() && !t.closest(".sub") && !t.closest("[data-menu-boton]")) fijarSub(false);
+  });
+
   if (boton && menu) {
     const fijar = (abierto: boolean) => {
       boton.setAttribute("aria-expanded", String(abierto));
       if (texto) texto.textContent = abierto ? "Cerrar menú" : "Abrir menú";
       menu.toggleAttribute("data-abierto", abierto);
       document.documentElement.classList.toggle("sin-scroll", abierto);
+      // En móvil, al abrir el menú se ven ya los próximos viajes
+      if (abierto && !matchMedia("(min-width: 960px)").matches) fijarSub(true);
     };
     boton.addEventListener("click", () => fijar(boton.getAttribute("aria-expanded") !== "true"));
     menu.addEventListener("click", (e) => {
-      if ((e.target as HTMLElement).closest("a")) fijar(false);
+      if ((e.target as HTMLElement).closest("a")) {
+        fijar(false);
+        fijarSub(false);
+      }
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && boton.getAttribute("aria-expanded") === "true") {
+      if (e.key !== "Escape") return;
+      if (subAbierto() && matchMedia("(min-width: 960px)").matches) {
+        fijarSub(false);
+        subBoton?.focus();
+      } else if (boton.getAttribute("aria-expanded") === "true") {
         fijar(false);
         boton.focus();
       }
     });
-    matchMedia("(min-width: 960px)").addEventListener("change", (e) => e.matches && fijar(false));
+    matchMedia("(min-width: 960px)").addEventListener("change", (e) => {
+      if (e.matches) fijar(false);
+      fijarSub(false);
+    });
   }
 </script>

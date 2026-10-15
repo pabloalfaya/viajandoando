@@ -13,6 +13,9 @@ export const SITE = {
   // Usuario de Instagram, sin la @.
   instagram: "viajandoand013" as string | null,
 
+  // Instagram personal de Amalia, sin la @.
+  instagramAmalia: "amaliaguerrero_",
+
   // WhatsApp con prefijo y sin espacios ni + (+34 673 62 83 34).
   whatsapp: "34673628334" as string | null,
 
@@ -30,6 +33,8 @@ export const SITE = {
 export const instagramUrl = SITE.instagram
   ? `https://www.instagram.com/${SITE.instagram}/`
   : "https://www.instagram.com/";
+
+export const instagramAmaliaUrl = `https://www.instagram.com/${SITE.instagramAmalia}/`;
 
 /** Mensaje directo de Instagram si hay usuario; si no, el perfil (o Instagram). */
 export const instagramDmUrl = SITE.instagram ? `https://ig.me/m/${SITE.instagram}` : instagramUrl;

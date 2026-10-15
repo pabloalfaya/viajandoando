@@ -1,6 +1,6 @@
 ---
 // Pie en azul. Sin enlaces a Glowi (cuenta como esquema de enlaces en una zona común).
-import { SITE, instagramUrl, whatsappUrl } from "../config/site";
+import { SITE, instagramAmaliaUrl, instagramUrl, whatsappUrl } from "../config/site";
 import { fechasCortas, getViajes } from "../lib/viajes";
 import Icono from "./Icono.astro";
 import Logo from "./Logo.astro";
@@ -47,7 +47,12 @@ const anio = new Date().getFullYear();
       <ul>
         <li>
           <a href={instagramUrl} target="_blank" rel="noopener" class="pie__red">
-            <Icono nombre="instagram" tam={20} /> Instagram
+            <Icono nombre="instagram" tam={20} /> Instagram de Viajando Ando
+          </a>
+        </li>
+        <li>
+          <a href={instagramAmaliaUrl} target="_blank" rel="noopener" class="pie__red">
+            <Icono nombre="instagram" tam={20} /> Instagram de Amalia
           </a>
         </li>
         {

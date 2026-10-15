@@ -5,7 +5,7 @@ import Boton from "../components/Boton.astro";
 import Forma from "../components/Forma.astro";
 import Preguntas from "../components/Preguntas.astro";
 import ViajeSeccion from "../components/ViajeSeccion.astro";
-import { SITE, instagramUrl } from "../config/site";
+import { SITE, instagramAmaliaUrl, instagramUrl } from "../config/site";
 import { PREGUNTAS, faqJsonLd } from "../data/preguntas";
 import { getViajes } from "../lib/viajes";
 
@@ -133,7 +133,7 @@ const jsonLd = [
       </div>
       <p class="hero__prueba">
         <Image src={logoCircular} alt="" width={28} height={28} widths={[28, 56]} sizes="28px" format="webp" />
-        {SITE.instagram ? <>Las aventuras, en directo en <strong>@{SITE.instagram}</strong></> : <>Las aventuras, en directo en Instagram</>}
+        <span>{SITE.instagram ? <>Las aventuras, en directo en <strong>@{SITE.instagram}</strong></> : <>Las aventuras, en directo en Instagram</>}</span>
       </p>
     </div>
   </section>
@@ -199,7 +199,12 @@ const jsonLd = [
           <li><span class="rasgos__punto" style="--c: var(--azul)"></span>Gente nueva</li>
           <li><span class="rasgos__punto" style="--c: var(--verde)"></span>Todo organizado</li>
         </ul>
-        <Boton href="/viajes/">Quiero ver los viajes</Boton>
+        <div class="botones">
+          <Boton href="/viajes/">Quiero ver los viajes</Boton>
+          <Boton href={instagramAmaliaUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">
+            Mi Instagram: @{SITE.instagramAmalia}
+          </Boton>
+        </div>
       </div>
     </div>
   </section>
@@ -378,7 +383,7 @@ const jsonLd = [
   .hero__sub { font-size: var(--t-m); max-width: 46ch; }
   .hero__sub--extra { display: none; }
   .hero__pregunta { font-weight: 600; font-size: var(--t-m); }
-  .hero__prueba { display: flex; align-items: center; gap: .6rem; font-size: var(--t-s); margin-top: .5rem; }
+  .hero__prueba { display: flex; align-items: center; gap: .6rem; font-size: var(--t-s); margin-top: .5rem; padding-right: 72px; }
   .hero__prueba img { border-radius: 50%; }
   @media (min-width: 720px) {
     .hero__sub { font-size: var(--t-l); line-height: 1.4; }

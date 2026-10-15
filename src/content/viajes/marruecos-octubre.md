@@ -4,13 +4,13 @@ codigo: VA 001
 pais: Marruecos
 paisSlug: marruecos
 lugar: Marrakech · Desierto de Agafay
-frase: 5 días. Cero conocidos. Marruecos.
+frase: 6 días. Cero conocidos. Marruecos.
 cita: Igual llegas sin conocer a nadie y vuelves con amigos para toda la vida.
-descripcion: Viaje en grupo a Marruecos del 28 de noviembre al 2 de diciembre de 2026 por 450 €. Transfers, alojamiento, algunas comidas, guías locales y muchas sorpresas.
+descripcion: Viaje en grupo a Marruecos del 28 de octubre al 2 de noviembre de 2026 por 450 €. Transfers, alojamiento, algunas comidas, guías locales y muchas sorpresas.
 estado: abierto
 borrador: false
-fechaInicio: 2026-11-28
-fechaFin: 2026-12-02
+fechaInicio: 2026-10-28
+fechaFin: 2026-11-02
 precio: 450
 # plazas: 0                 # TODO
 # deposito: 0               # TODO
@@ -52,19 +52,22 @@ noIncluye:
   - Internet en el viaje (te cuento cómo lo hago yo más abajo)
 # EJEMPLO — sustituir por el real (itinerario)
 itinerario:
-  - dia: Día 1 · 28 nov
+  - dia: Día 1 · 28 oct
     titulo: Llegada a Marrakech
     texto: "EJEMPLO — sustituir por el real. Nos encontramos, dejamos las maletas y primera vuelta por la medina para ir abriendo boca."
-  - dia: Día 2 · 29 nov
+  - dia: Día 2 · 29 oct
     titulo: La medina sin prisas
     texto: "EJEMPLO — sustituir por el real. Callejones, puertas imposibles, zocos y el primer regateo del grupo (que siempre sale regular)."
-  - dia: Día 3 · 30 nov
+  - dia: Día 3 · 30 oct
     titulo: Desierto de Agafay
     texto: "EJEMPLO — sustituir por el real. Quads, camellos y atardecer en el desierto."
-  - dia: Día 4 · 1 dic
+  - dia: Día 4 · 31 oct
     titulo: Cascadas de Ouzoud
     texto: "EJEMPLO — sustituir por el real. Excursión de día a las cascadas. Lleva calzado cómodo."
-  - dia: Día 5 · 2 dic
+  - dia: Día 5 · 1 nov
+    titulo: Más sorpresas
+    texto: "EJEMPLO — sustituir por el real. Un día para lo que surja (y alguna sorpresa)."
+  - dia: Día 6 · 2 nov
     titulo: Vuelta a casa
     texto: "EJEMPLO — sustituir por el real. Último té a la menta y vuelta con mil historias que contar."
 faq:
@@ -77,4 +80,4 @@ faq:
 
 No es solo un viaje a Marruecos. Es perderte por una medina que parece un laberinto, regatear (fatal) en un zoco, ver atardecer en el desierto y acabar el día riéndote con gente que hace una semana no conocías.
 
-Del 28 de noviembre al 2 de diciembre. Los transfers, el alojamiento, algunas comidas y los guías locales ya están: tú solo tienes que venir con ganas. Y prepárate, porque habrá muchas sorpresas.
+Del 28 de octubre al 2 de noviembre. Los transfers, el alojamiento, algunas comidas y los guías locales ya están: tú solo tienes que venir con ganas. Y prepárate, porque habrá muchas sorpresas.

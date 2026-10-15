@@ -1,4 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/viajes/marruecos-noviembre/",
+      "destination": "/viajes/marruecos-octubre/",
+      "permanent": true
+    }
+  ]
 }

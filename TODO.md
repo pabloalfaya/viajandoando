@@ -9,7 +9,7 @@ Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio
 - [ ] **Email** de contacto (`SITE.email`).
 
 ## Viajes a Marruecos (`src/content/viajes/`)
-**VA 001 · 28 nov – 2 dic 2026** (`marruecos-noviembre.md`): 450 €; incluye transfers, alojamiento, algunas comidas, guías locales y sorpresas.
+**VA 001 · 28 oct – 2 nov 2026** (`marruecos-octubre.md`): 450 €; incluye transfers, alojamiento, algunas comidas, guías locales y sorpresas.
 - [ ] `deposito` y `plazas` (si los hay) y `alojamiento` (dónde dormimos).
 - [ ] **Itinerario y actividades siguen siendo de EJEMPLO** y se ven en la web con la marca «EJEMPLO — sustituir por el real».
 - [ ] Qué comidas están incluidas y cuáles no.

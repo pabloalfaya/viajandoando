@@ -1,13 +1,12 @@
 # TODO — datos pendientes antes de publicar
 
-Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio muy pronto», el CTA «Avísame por Instagram», el enlace a instagram.com sin usuario y el crédito «Diseño web: Pablo» sin enlace.
+Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio muy pronto», el CTA «Avísame por Instagram» y el enlace a instagram.com sin usuario.
 
 ## Configuración (`src/config/site.ts`)
 - [ ] **Dominio** definitivo (`SITE.dominio`). Cámbialo también en `astro.config.mjs` (`DOMINIO`). Afecta a canonical, sitemap, robots.txt y Open Graph.
 - [x] Instagram: viajandoand013 (hecho).
 - [x] WhatsApp: +34 673 62 83 34 (hecho). Botón fijo abajo a la derecha en todas las páginas. Si se quiere que el botón «Reserva tu plaza» lleve a WhatsApp en vez de a Instagram: `SITE.reservaVia = "whatsapp"`.
 - [ ] **Email** de contacto (`SITE.email`).
-- [ ] **creditoUrl**: web de desarrollo de Pablo para el crédito del pie (sin `sponsored`, nunca a Glowi).
 
 ## Viajes a Marruecos (`src/content/viajes/`)
 **VA 001 · 28 nov – 2 dic 2026** (`marruecos-noviembre.md`): 450 €; incluye transfers, alojamiento, algunas comidas, guías locales y sorpresas.

@@ -24,10 +24,6 @@ export const SITE = {
 
   // Dónde lleva el botón de reserva mientras no haya pasarela de pago.
   reservaVia: "instagram" as "instagram" | "whatsapp",
-
-  // Crédito del pie. TODO: URL de la web de desarrollo de Pablo (nunca a Glowi, sin `sponsored`).
-  credito: "Pablo",
-  creditoUrl: null as string | null,
 };
 
 export const instagramUrl = SITE.instagram

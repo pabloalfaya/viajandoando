@@ -1,0 +1,54 @@
+---
+import Base from "../../layouts/Base.astro";
+import Boton from "../../components/Boton.astro";
+import Forma from "../../components/Forma.astro";
+import TarjetaViaje from "../../components/TarjetaViaje.astro";
+import { instagramUrl } from "../../config/site";
+import { getViajes } from "../../lib/viajes";
+
+const viajes = await getViajes();
+const COLORES = ["verde", "azul", "rojo"] as const;
+---
+
+<Base
+  titulo="Próximos viajes"
+  descripcion="Los próximos viajes en grupo de Viajando Ando: destino, fechas, itinerario, precio y qué incluye cada experiencia. Tú eliges el destino; yo preparo el plan."
+>
+  <section class="seccion listado" aria-labelledby="listado-titulo">
+    <Forma tipo="medio" color="verde" tam="clamp(120px, 24vw, 240px)" class="listado__forma" />
+    <div class="contenedor">
+      <p class="eyebrow">Próximas aventuras</p>
+      <h1 id="listado-titulo">El mundo es demasiado grande para quedarse <span class="acento">mirando</span>.</h1>
+      <p class="entradilla texto">
+        Aquí encontrarás los próximos viajes, con toda la información para elegir tu siguiente aventura. Tú eliges el
+        destino. Yo preparo el plan. Y juntos vemos qué historias salen de ahí.
+      </p>
+
+      <div class="listado__rejilla">
+        {viajes.map((v, i) => <TarjetaViaje viaje={v} color={COLORES[i % COLORES.length]} />)}
+      </div>
+
+      <div class="listado__mas">
+        <p>¿No ves tu destino? Sígueme en Instagram y te aviso cuando salga un viaje nuevo.</p>
+        <Boton href={instagramUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">Sígueme en Instagram</Boton>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .listado { padding-top: 9rem; overflow: hidden; }
+  .listado__forma { position: absolute; right: -20px; top: 92px; rotate: 180deg; }
+  .listado h1 { max-width: 20ch; position: relative; }
+  .listado__rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 3rem 2.5rem;
+    margin-top: 3.5rem;
+  }
+  .listado__mas {
+    margin-top: 4rem; padding-top: 2rem; border-top: 2px solid var(--tinta);
+    display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between;
+  }
+  .listado__mas p { margin: 0; font-family: var(--f-display); font-weight: 500; font-size: var(--t-l); }
+</style>

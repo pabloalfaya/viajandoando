@@ -1,0 +1,35 @@
+---
+import Legal from "../layouts/Legal.astro";
+import { SITE } from "../config/site";
+// TODO: titular, NIF, dirección y email (ver TODO.md).
+const T = { titular: "[pendiente: titular]", nif: "[pendiente: NIF]", direccion: "[pendiente: dirección]", email: SITE.email ?? "[pendiente: email]" };
+---
+
+<Legal titulo="Aviso legal" descripcion="Aviso legal de Viajando Ando.">
+  <h2>Datos identificativos</h2>
+  <p>
+    En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE),
+    se informa de que este sitio web es titularidad de {T.titular}, con NIF {T.nif} y domicilio en {T.direccion}. Email de
+    contacto: {T.email}.
+  </p>
+  <h2>Objeto</h2>
+  <p>
+    Este sitio web informa sobre los viajes en grupo que organiza {SITE.nombre}. Las condiciones concretas de cada viaje
+    (precio, qué incluye, cancelación y reembolsos) se indican en su página y en la confirmación de la reserva.
+  </p>
+  <h2>Enlaces de afiliación</h2>
+  <p>
+    Algunas páginas incluyen enlaces y códigos de afiliación (por ejemplo, para comprar una eSIM). Si compras a través de
+    ellos, {SITE.nombre} puede recibir una comisión sin coste adicional para ti. Estos enlaces están marcados como
+    patrocinados.
+  </p>
+  <h2>Propiedad intelectual</h2>
+  <p>
+    Los textos, fotografías, vídeos y el logotipo de este sitio pertenecen a su titular o se usan con autorización. No se
+    permite su reproducción sin permiso.
+  </p>
+  <h2>Responsabilidad</h2>
+  <p>
+    El titular no se hace responsable del contenido de sitios web de terceros a los que se pueda acceder mediante enlaces.
+  </p>
+</Legal>

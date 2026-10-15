@@ -26,6 +26,11 @@ galeria:
   - ../../assets/fotos/amalia-puerta-mezquita-recorte.jpg
   - ../../assets/fotos/hero-camellos-poster.jpg
   - ../../assets/fotos/quads-agafay.jpg
+galeriaAlt:
+  - Amalia en un callejón de la medina de Marrakech, con una bici y un gato
+  - Amalia apoyada en una gran puerta de madera con remaches en Marrakech
+  - Amalia frente a una fila de camellos en el desierto
+  - Quads aparcados en fila en el desierto de Agafay
 video:
   src: /video/cascadas-ouzoud.mp4
   poster: ../../assets/fotos/cascadas-ouzoud-poster.jpg

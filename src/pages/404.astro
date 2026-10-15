@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import Boton from "../components/Boton.astro";
+import Forma from "../components/Forma.astro";
+---
+
+<Base titulo="Página no encontrada" descripcion="Esta página se ha ido de viaje sin avisar." noindex>
+  <section class="perdida contenedor">
+    <Forma tipo="circulo" color="rojo" tam="clamp(100px, 24vw, 180px)" />
+    <p class="eyebrow">Error 404</p>
+    <h1>Esta página se ha ido de <span class="acento">viaje</span> sin avisar.</h1>
+    <p class="entradilla">Pasa hasta en las mejores aventuras: a veces una calle no lleva a donde decía el mapa.</p>
+    <div class="botones">
+      <Boton href="/">Volver al inicio</Boton>
+      <Boton href="/viajes/" variante="borde">Ver próximos viajes</Boton>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .perdida { padding-block: 9rem 6rem; display: grid; gap: 1rem; justify-items: start; }
+  .perdida h1 { max-width: 18ch; margin: 0; }
+</style>

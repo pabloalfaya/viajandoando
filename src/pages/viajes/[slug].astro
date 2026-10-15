@@ -1,0 +1,394 @@
+---
+import { Image, Picture } from "astro:assets";
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Boton from "../../components/Boton.astro";
+import Forma from "../../components/Forma.astro";
+import Icono from "../../components/Icono.astro";
+import InternetViaje from "../../components/InternetViaje.astro";
+import Preguntas from "../../components/Preguntas.astro";
+import { SITE, instagramDmUrl, reservaUrl } from "../../config/site";
+import { faqJsonLd } from "../../data/preguntas";
+import { ESTADO, PENDIENTE, euros, fechasTexto, getViajes, tienePrecio, type Viaje } from "../../lib/viajes";
+
+export async function getStaticPaths() {
+  const viajes = await getViajes();
+  return viajes.map((viaje) => ({ params: { slug: viaje.id }, props: { viaje } }));
+}
+
+interface Props {
+  viaje: Viaje;
+}
+const { viaje } = Astro.props;
+const d = viaje.data;
+const { Content } = await render(viaje);
+const fechas = fechasTexto(d);
+const conPrecio = tienePrecio(d);
+const completo = d.estado === "completo";
+const ctaUrl = conPrecio && !completo ? reservaUrl(d.titulo) : instagramDmUrl;
+const ctaTexto = completo ? "Avísame del próximo" : conPrecio ? "Reserva tu plaza" : "Avísame por Instagram";
+const ctaBarra = conPrecio && !completo ? `Reserva tu plaza · ${euros(d.precio!)}` : ctaTexto;
+
+const descripcion =
+  d.descripcion ?? `Viaje en grupo a ${d.pais} para gente que no se conoce: ${d.lugar}. ${fechas ?? PENDIENTE}.`;
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: `${d.titulo} · ${SITE.nombre}`,
+    description: descripcion,
+    url: new URL(Astro.url.pathname, SITE.dominio).href,
+    touristType: "Viajeros que quieren viajar en grupo con gente nueva",
+    provider: { "@type": "TravelAgency", name: SITE.nombre, url: new URL("/", SITE.dominio).href },
+    ...(conPrecio
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: d.precio,
+            priceCurrency: "EUR",
+            availability: completo ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+            url: new URL(Astro.url.pathname, SITE.dominio).href,
+          },
+        }
+      : {}),
+  },
+];
+if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
+---
+
+<Base titulo={`Viaje a ${d.titulo}`} descripcion={descripcion} jsonLd={jsonLd} tipo="article">
+  <!-- Hero -->
+  <section class="vhero sobre-foto" aria-labelledby="vhero-titulo">
+    <div class="foto-fondo">
+      <Picture
+        formats={["avif", "webp"]}
+        src={d.portada}
+        alt=""
+        widths={[480, 800, 1200, 1800]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={68}
+      />
+    </div>
+    <div class="contenedor vhero__contenido">
+      <p class="vhero__frase">{d.frase}</p>
+      <p class="vhero__codigo"><span>{d.codigo}</span><span class="vhero__estado">{ESTADO[d.estado]}</span></p>
+      <h1 id="vhero-titulo" class="vhero__destino">{d.titulo}</h1>
+      <dl class="vhero__datos">
+        <div><dt>Cuándo</dt><dd>{fechas ?? PENDIENTE}</dd></div>
+        <div><dt>Dónde</dt><dd>{d.lugar}</dd></div>
+        {d.plazas && <div><dt>Plazas</dt><dd>{d.plazas}</dd></div>}
+      </dl>
+      <blockquote class="vhero__cita">«{d.cita}»</blockquote>
+      <div class="botones">
+        <Boton href="#reserva" variante="crema" icono="abajo">{conPrecio ? "Ver precio y reserva" : "Quiero ir"}</Boton>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introducción -->
+  <section class="seccion" aria-labelledby="intro-titulo">
+    <div class="contenedor intro">
+      <div>
+        <p class="eyebrow">{d.lugar}</p>
+        <h2 id="intro-titulo">No es solo un viaje a <span class="acento">{d.pais}</span></h2>
+      </div>
+      <div class="texto intro__texto">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {
+    (d.galeria.length > 0 || d.video) && (
+      <section class="vgaleria" aria-label={`Fotos de ${d.titulo}`}>
+        <ul class="vgaleria__pista" tabindex="0" aria-label="Galería del viaje (desliza en horizontal)">
+          {d.video && (
+            <li class="vgaleria__video">
+              <Image src={d.video.poster} alt={d.video.alt} widths={[300, 450]} sizes="(min-width: 960px) 320px, 70vw" quality={68} />
+              <video muted loop playsinline preload="none" aria-hidden="true" data-video-perezoso={d.video.src} />
+            </li>
+          )}
+          {d.galeria.map((foto, i) => (
+            <li>
+              <Image src={foto} alt={d.galeriaAlt[i] ?? `${d.titulo}: foto ${i + 1} del viaje`} widths={[300, 450, 600]} sizes="(min-width: 960px) 320px, 70vw" quality={68} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    d.actividades.length > 0 && (
+      <section class="seccion actividades" aria-labelledby="act-titulo">
+        <div class="contenedor">
+          <p class="eyebrow">Lo que vamos a vivir</p>
+          <h2 id="act-titulo">Planes que no caben en una <span class="acento">foto</span></h2>
+          <ul class="actividades__rejilla">
+            {d.actividades.map((a) => (
+              <li>
+                <span class="actividades__icono"><Icono nombre={a.icono} tam={30} /></span>
+                <span>{a.texto}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Itinerario -->
+  <section class="seccion itinerario" aria-labelledby="itin-titulo">
+    <div class="contenedor">
+      <p class="eyebrow">Día a día</p>
+      <h2 id="itin-titulo">El <span class="acento">itinerario</span></h2>
+      <ol class="linea">
+        {
+          d.itinerario.map((dia) => (
+            <li class="linea__dia">
+              <p class="linea__etiqueta">{dia.dia}</p>
+              <h3>{dia.titulo}</h3>
+              <p>{dia.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Incluye / No incluye -->
+  <section class="seccion incluye" aria-labelledby="incluye-titulo">
+    <div class="contenedor">
+      <h2 id="incluye-titulo">Todo esto está <span class="acento">incluido</span></h2>
+      <div class="incluye__cols">
+        <div class="incluye__col">
+          <h3>Incluye</h3>
+          <ul>
+            {d.incluye.map((x) => <li><Icono nombre="check" tam={20} class="incluye__si" />{x}</li>)}
+          </ul>
+        </div>
+        <div class="incluye__col">
+          <h3>No incluye</h3>
+          <ul>
+            {d.noIncluye.map((x) => <li><Icono nombre="equis" tam={20} class="incluye__no" />{x}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alojamiento -->
+  <section class="seccion alojamiento" aria-labelledby="aloja-titulo">
+    <div class="contenedor alojamiento__caja">
+      <p class="eyebrow">Dónde dormimos</p>
+      <h2 id="aloja-titulo">Alojamiento</h2>
+      <p class="entradilla">{d.alojamiento ?? "Te cuento muy pronto dónde vamos a dormir."}</p>
+    </div>
+  </section>
+
+  <!-- Precio y reserva -->
+  <section id="reserva" class="seccion reserva oscuro" aria-labelledby="reserva-titulo">
+    <Forma tipo="circulo" color="rojo" tam="clamp(120px, 30vw, 300px)" class="reserva__forma" />
+    <div class="contenedor reserva__contenido">
+      <p class="eyebrow">Precio y reserva</p>
+      {
+        conPrecio ? (
+          <>
+            <h2 id="reserva-titulo" class="reserva__precio">{euros(d.precio!)}</h2>
+            <ul class="reserva__datos">
+              {d.deposito && <li>Reserva tu plaza con un depósito de <strong>{euros(d.deposito)}</strong>.</li>}
+              {fechas && <li>{fechas}</li>}
+              {d.plazas && <li>{d.plazas} plazas · {ESTADO[d.estado]}</li>}
+              <li>Los vuelos no están incluidos.</li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <h2 id="reserva-titulo" class="reserva__precio">{PENDIENTE}</h2>
+            <p class="entradilla">
+              Estoy cerrando los últimos detalles. Escríbeme por Instagram y te aviso en cuanto abra las plazas.
+            </p>
+          </>
+        )
+      }
+      <Boton href={ctaUrl} variante="crema" icono={SITE.reservaVia === "whatsapp" && conPrecio ? "whatsapp" : "instagram"} target="_blank" rel="noopener">
+        {ctaTexto}
+      </Boton>
+    </div>
+  </section>
+
+  {
+    d.faq.length > 0 && (
+      <section class="seccion" aria-labelledby="vfaq-titulo">
+        <div class="contenedor vfaq">
+          <h2 id="vfaq-titulo">Preguntas sobre este <span class="acento">viaje</span></h2>
+          <Preguntas preguntas={d.faq} />
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Caja de internet: siempre al final de la página del viaje -->
+  <section class="seccion internet-viaje" aria-label="Internet en el viaje">
+    <div class="contenedor">
+      <InternetViaje pais={d.paisSlug} nombre={d.pais} />
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="vcierre seccion" aria-labelledby="vcierre-titulo">
+    <div class="contenedor vcierre__contenido">
+      <h2 id="vcierre-titulo">Igual llegas sin conocer a nadie y vuelves con <span class="acento">amigos</span>.</h2>
+      <div class="botones">
+        <Boton href={ctaUrl} target="_blank" rel="noopener">{ctaTexto}</Boton>
+        <Boton href="/viajes/" variante="borde">Ver otros viajes</Boton>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra fija de reserva (móvil) -->
+  <div class="barra" slot="antes-del-pie">
+    <p class="barra__estado">{conPrecio ? (fechas ?? ESTADO[d.estado]) : PENDIENTE}</p>
+    <a href={ctaUrl} class="barra__cta" target="_blank" rel="noopener">{ctaBarra}</a>
+  </div>
+</Base>
+
+<script>
+  const reducir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ahorro = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  if (!reducir && !ahorro && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entradas) => {
+        for (const e of entradas) {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) {
+            if (!v.src) v.src = v.dataset.videoPerezoso!;
+            v.play().catch(() => {});
+          } else if (v.src) v.pause();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    document.querySelectorAll<HTMLVideoElement>("[data-video-perezoso]").forEach((v) => io.observe(v));
+  }
+</script>
+
+<style>
+  /* Hero */
+  .vhero { min-height: 100svh; display: flex; align-items: flex-end; padding-block: 7.5rem 3rem; }
+  .vhero__contenido { display: grid; gap: .9rem; justify-items: start; }
+  .vhero p { margin: 0; }
+  .vhero__frase { font-size: var(--t-l); font-weight: 600; max-width: 30ch; }
+  .vhero__codigo {
+    display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
+    font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .22em;
+  }
+  .vhero__estado { background: var(--verde); color: var(--crema); padding: .35em .9em; border-radius: var(--radio-pill); letter-spacing: .12em; }
+  .vhero__destino { font-size: var(--t-xxl); line-height: .92; margin: .1em 0; overflow-wrap: anywhere; }
+  .vhero__datos { display: flex; flex-wrap: wrap; gap: .75rem 2.5rem; margin: 0; }
+  .vhero__datos dt { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; }
+  .vhero__datos dd { margin: 0; }
+  .vhero__cita { margin: .5rem 0 1rem; font-size: var(--t-l); line-height: 1.35; max-width: 36ch; }
+
+  /* Intro */
+  .intro { display: grid; gap: 1.5rem; }
+  .intro__texto :global(p) { font-size: var(--t-l); line-height: 1.5; color: var(--tinta-2); }
+  .intro__texto :global(p:first-child) { color: var(--tinta); }
+  @media (min-width: 960px) { .intro { grid-template-columns: 2fr 3fr; gap: 5rem; } }
+
+  /* Galería del viaje */
+  .vgaleria__pista {
+    list-style: none; margin: 0; padding: 0 var(--lateral) 1rem;
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(70vw, 320px); gap: 1rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--lateral);
+  }
+  .vgaleria__pista li { scroll-snap-align: start; }
+  .vgaleria__video { position: relative; }
+  .vgaleria__video video { position: absolute; inset: 0; height: 100%; }
+  .vgaleria__pista :is(img, video) { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radio); background: var(--tinta); }
+  @media (min-width: 1180px) {
+    .vgaleria__pista { padding-inline: max(var(--lateral), calc((100vw - var(--ancho)) / 2)); }
+  }
+
+  /* Actividades */
+  .actividades__rejilla {
+    list-style: none; padding: 0; margin: 2.5rem 0 0;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem 1.25rem;
+  }
+  .actividades__rejilla li { display: grid; justify-items: center; text-align: center; gap: .9rem; font-weight: 600; }
+  .actividades__icono {
+    display: grid; place-items: center;
+    width: 84px; height: 84px; border-radius: 50%;
+    border: 2px dashed var(--verde); color: var(--verde);
+  }
+
+  /* Itinerario: línea temporal vertical */
+  .itinerario { background: var(--papel); }
+  .linea { list-style: none; margin: 2.5rem 0 0; padding: 0; position: relative; max-width: 48rem; }
+  .linea::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: var(--tinta); }
+  .linea__dia { position: relative; padding: 0 0 2.25rem 3rem; }
+  .linea__dia::before {
+    content: ""; position: absolute; left: 0; top: 2px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--rojo); border: 4px solid var(--papel);
+  }
+  .linea__dia:nth-child(3n + 2)::before { background: var(--azul); }
+  .linea__dia:nth-child(3n)::before { background: var(--verde); }
+  .linea__etiqueta { margin: 0 0 .2rem; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .22em; color: var(--verde); }
+  .linea__dia h3 { margin: 0 0 .35rem; }
+  .linea__dia p:last-child { color: var(--tinta-2); margin: 0; }
+
+  /* Incluye */
+  .incluye__cols { display: grid; gap: 1.5rem; margin-top: 2rem; }
+  .incluye__col { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.5rem; }
+  .incluye__col h3 { font-size: var(--t-l); text-transform: uppercase; }
+  .incluye__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+  .incluye__col li { display: flex; gap: .75rem; align-items: flex-start; }
+  .incluye__col :global(.icono) { flex: none; margin-top: .2rem; }
+  .incluye__col :global(.incluye__si) { color: var(--verde); }
+  .incluye__col :global(.incluye__no) { color: var(--rojo); }
+  @media (min-width: 760px) { .incluye__cols { grid-template-columns: 1fr 1fr; } }
+
+  /* Alojamiento */
+  .alojamiento { padding-top: 0; }
+  .alojamiento__caja { max-width: calc(48rem + 2 * var(--lateral)); }
+
+  /* Reserva */
+  .reserva { overflow: hidden; }
+  .reserva__forma { position: absolute; right: -40px; top: -40px; }
+  .reserva__contenido { position: relative; display: grid; gap: 1rem; justify-items: start; }
+  .reserva__precio { font-size: var(--t-xl); margin: 0; max-width: 18ch; }
+  .reserva__datos { margin: 0; padding-left: 1.2em; }
+  .reserva .entradilla { color: var(--crema); max-width: 40ch; }
+
+  .vfaq { display: grid; gap: 2rem; max-width: calc(52rem + 2 * var(--lateral)); }
+  .internet-viaje { padding-bottom: 0; }
+
+  .vcierre__contenido { display: grid; gap: 1.5rem; justify-items: start; }
+  .vcierre h2 { max-width: 22ch; margin: 0; }
+
+  /* Barra fija en móvil */
+  .barra {
+    position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    padding: .6rem var(--lateral) calc(.6rem + env(safe-area-inset-bottom));
+    background: var(--papel);
+    border-top: 2px solid var(--tinta);
+  }
+  .barra__estado { margin: 0; font-size: var(--t-xs); font-weight: 600; line-height: 1.25; text-transform: uppercase; letter-spacing: .06em; }
+  .barra__cta {
+    flex: none;
+    display: inline-flex; align-items: center; min-height: 48px; padding: .5em 1.2em;
+    border-radius: var(--radio-pill); background: var(--rojo); color: var(--crema);
+    font-weight: 600; font-size: var(--t-s); text-decoration: none;
+  }
+  .barra__cta:hover { background: var(--tinta); color: var(--crema); }
+  :global(body):has(.barra) { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  @media (min-width: 960px) {
+    .barra { display: none; }
+    :global(body):has(.barra) { padding-bottom: 0; }
+  }
+</style>

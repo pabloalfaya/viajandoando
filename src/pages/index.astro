@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import Boton from "../components/Boton.astro";
 import Forma from "../components/Forma.astro";
@@ -105,12 +105,9 @@ const jsonLd = [
         loop
         playsinline
         preload="metadata"
-        poster={posterHero.src}
         aria-hidden="true"
-        data-video-hero
-      >
-        <source src="/video/hero-camellos.mp4" type="video/mp4" />
-      </video>
+        data-video-hero="/video/hero-camellos.mp4"
+      ></video>
     </div>
     <div class="contenedor hero__contenido">
       <h1 id="hero-titulo">
@@ -137,19 +134,24 @@ const jsonLd = [
     </div>
   </section>
   <script is:inline>
-    // Con «reducir movimiento» o «ahorro de datos», solo el póster: se quita el vídeo antes de descargarlo.
+    // El vídeo se pide cuando la página ya ha cargado (el póster se ve desde el principio).
+    // Con «reducir movimiento» o «ahorro de datos» no se descarga: solo el póster.
     (function () {
       var v = document.querySelector("[data-video-hero]");
       if (!v) return;
       var reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var ahorro = navigator.connection && navigator.connection.saveData;
       if (reducir || ahorro) {
-        v.pause();
         v.removeAttribute("autoplay");
-        v.querySelectorAll("source").forEach(function (s) { s.remove(); });
-        v.load();
         v.hidden = true;
+        return;
       }
+      var cargar = function () {
+        v.src = v.getAttribute("data-video-hero");
+        v.play().catch(function () {});
+      };
+      if (document.readyState === "complete") cargar();
+      else window.addEventListener("load", function () { setTimeout(cargar, 200); });
     })();
   </script>
 
@@ -208,21 +210,8 @@ const jsonLd = [
           BLOQUES.map((b) => (
             <article class="fila aparece">
               <div class="fila__foto">
-                {b.video ? (
-                  <video
-                    muted
-                    loop
-                    playsinline
-                    preload="none"
-                    poster={b.foto.src}
-                    aria-label={b.alt}
-                    data-video-perezoso={b.video}
-                    width={b.foto.width}
-                    height={b.foto.height}
-                  />
-                ) : (
-                  <Image src={b.foto} alt={b.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 960px) 520px, 92vw" quality={70} />
-                )}
+                <Image src={b.foto} alt={b.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 960px) 520px, 92vw" quality={70} />
+                {b.video && <video muted loop playsinline preload="none" aria-hidden="true" data-video-perezoso={b.video} />}
               </div>
               <div class="fila__texto">
                 <h3>{b.titulo}</h3>
@@ -328,7 +317,7 @@ const jsonLd = [
   <!-- Cierre -->
   <section class="cierre sobre-foto" aria-labelledby="cierre-titulo">
     <div class="foto-fondo">
-      <Image src={fotoArco} alt="" widths={[480, 800, 1200, 1600]} sizes="100vw" quality={65} />
+      <Picture formats={["avif", "webp"]} src={fotoArco} alt="" widths={[480, 800, 1200, 1600]} sizes="100vw" quality={65} />
     </div>
     <div class="contenedor cierre__contenido">
       <Image src={logoCircular} alt="" width={96} height={96} widths={[96, 192]} sizes="96px" format="webp" class="cierre__logo" />
@@ -384,7 +373,7 @@ const jsonLd = [
   .hero p { margin: 0; }
   .hero__sub { font-size: var(--t-m); max-width: 46ch; }
   .hero__sub--extra { display: none; }
-  .hero__pregunta { font-weight: 700; font-size: var(--t-m); }
+  .hero__pregunta { font-weight: 600; font-size: var(--t-m); }
   .hero__prueba { display: flex; align-items: center; gap: .6rem; font-size: var(--t-s); margin-top: .5rem; }
   .hero__prueba img { border-radius: 50%; }
   @media (min-width: 720px) {
@@ -414,8 +403,10 @@ const jsonLd = [
   .como { background: var(--papel); }
   .filas { display: grid; gap: clamp(3rem, 2rem + 4vw, 6rem); margin-top: 3rem; }
   .fila { display: grid; gap: 1.5rem; align-items: center; }
-  .fila__foto { aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radio); background: var(--crema); }
+  .fila__foto { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radio); background: var(--crema); }
   .fila__foto :is(img, video) { width: 100%; height: 100%; object-fit: cover; }
+  /* el vídeo va encima de su foto (que hace de póster sin cargarse antes de tiempo) */
+  .fila__foto video { position: absolute; inset: 0; }
   .fila h3 { font-size: var(--t-xl); font-weight: 600; text-transform: uppercase; line-height: 1.02; }
   .fila p { color: var(--tinta-2); font-size: var(--t-l); line-height: 1.45; max-width: 40ch; }
   @media (min-width: 760px) {

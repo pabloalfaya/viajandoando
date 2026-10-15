@@ -75,7 +75,7 @@ ul, ol { padding-left: 1.2em; }
   display: inline-flex; align-items: center; gap: .75em;
   font-family: var(--f-body);
   font-size: .75rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .22em;
   color: var(--verde);
@@ -93,7 +93,7 @@ ul, ol { padding-left: 1.2em; }
   border-radius: var(--radio-pill);
   background: var(--bg); color: var(--fg);
   border: 2px solid var(--bg);
-  font-family: var(--f-body); font-size: var(--t-s); font-weight: 700;
+  font-family: var(--f-body); font-size: var(--t-s); font-weight: 600;
   text-transform: uppercase; letter-spacing: .08em;
   text-decoration: none; line-height: 1.2; text-align: left;
   cursor: pointer;
@@ -124,6 +124,7 @@ ul, ol { padding-left: 1.2em; }
 
 /* ---------- Foto de fondo con velado plano ---------- */
 .foto-fondo { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: var(--tinta); }
+.foto-fondo picture { position: absolute; inset: 0; }
 .foto-fondo img, .foto-fondo video { width: 100%; height: 100%; object-fit: cover; }
 .foto-fondo::after { content: ""; position: absolute; inset: 0; background: var(--velo); }
 .sobre-foto { color: var(--crema); isolation: isolate; position: relative; }

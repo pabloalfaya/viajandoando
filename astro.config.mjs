@@ -10,6 +10,10 @@ export default defineConfig({
   site: DOMINIO,
   trailingSlash: "always",
   output: "static",
+  // Las clases pasadas a componentes hijos (Icono, Forma…) heredan el ámbito de estilos del padre.
+  scopedStyleStrategy: "class",
+  // CSS pequeño: inline para no bloquear el renderizado (mejor LCP en móvil).
+  build: { inlineStylesheets: "always" },
   integrations: [
     sitemap({
       filter: (pagina) => !NOINDEX.some((ruta) => new URL(pagina).pathname === ruta),

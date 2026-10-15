@@ -33,6 +33,7 @@ const viajes = defineCollection({
 
       // Extras opcionales
       descripcion: z.string().optional(), // meta description de la página del viaje
+      galeriaAlt: z.array(z.string()).default([]), // textos alternativos de la galería, en el mismo orden
       actividades: z
         .array(z.object({ icono: z.enum(["quad", "camello", "medina", "cascada", "te", "estrellas", "playa", "montana", "ciudad"]), texto: z.string() }))
         .default([]),

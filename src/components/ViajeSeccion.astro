@@ -1,6 +1,6 @@
 ---
 // Un viaje como sección a pantalla completa (foto de fondo, frase, código, destino enorme…).
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import { ESTADO, PENDIENTE, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
 import Boton from "./Boton.astro";
 
@@ -15,7 +15,7 @@ const url = `/viajes/${viaje.id}/`;
 
 <article class="viaje sobre-foto" aria-labelledby={`viaje-${viaje.id}`}>
   <div class="foto-fondo">
-    <Image src={d.portada} alt="" widths={[480, 800, 1200, 1800]} sizes="100vw" quality={70} />
+    <Picture formats={["avif", "webp"]} src={d.portada} alt="" widths={[480, 800, 1200, 1800]} sizes="100vw" quality={70} />
   </div>
   <div class="contenedor viaje__contenido">
     <p class="viaje__frase">{d.frase}</p>
@@ -43,7 +43,7 @@ const url = `/viajes/${viaje.id}/`;
   .viaje__frase { font-size: var(--t-l); font-weight: 600; max-width: 30ch; }
   .viaje__codigo {
     display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center;
-    font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .22em;
+    font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .22em;
   }
   .viaje__estado { background: var(--verde); color: var(--crema); padding: .35em .9em; border-radius: var(--radio-pill); letter-spacing: .12em; }
   .viaje__destino {
@@ -56,7 +56,7 @@ const url = `/viajes/${viaje.id}/`;
     overflow-wrap: anywhere;
   }
   .viaje__datos { display: flex; flex-wrap: wrap; gap: .75rem 2.5rem; margin: 0; }
-  .viaje__datos dt { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .18em; }
+  .viaje__datos dt { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; }
   .viaje__datos dd { margin: 0; font-size: var(--t-m); }
   .viaje__cita { margin: .5rem 0 1rem; font-size: var(--t-l); max-width: 36ch; line-height: 1.35; }
 </style>

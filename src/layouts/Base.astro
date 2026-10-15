@@ -3,11 +3,11 @@ import "@fontsource/jost/500.css";
 import "@fontsource/jost/600.css";
 import "@fontsource/figtree/400.css";
 import "@fontsource/figtree/600.css";
-import "@fontsource/figtree/700.css";
 import "../styles/global.css";
 import Cabecera from "../components/Cabecera.astro";
 import Pie from "../components/Pie.astro";
 import { SITE } from "../config/site";
+import jost600 from "@fontsource/jost/files/jost-latin-600-normal.woff2?url";
 
 interface Props {
   titulo: string;
@@ -39,6 +39,7 @@ const analitica = Boolean(process.env.VERCEL);
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#F6EADC" />
+    <link rel="preload" href={jost600} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon-32.png" type="image/png" />

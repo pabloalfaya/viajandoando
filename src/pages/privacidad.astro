@@ -1,0 +1,30 @@
+---
+import Legal from "../layouts/Legal.astro";
+import { SITE } from "../config/site";
+// TODO: titular, NIF, dirección y email (ver TODO.md).
+const T = { titular: "[pendiente: titular]", nif: "[pendiente: NIF]", direccion: "[pendiente: dirección]", email: SITE.email ?? "[pendiente: email]" };
+---
+
+<Legal titulo="Política de privacidad" descripcion="Política de privacidad de Viajando Ando.">
+  <h2>Responsable del tratamiento</h2>
+  <p>{T.titular} · NIF {T.nif} · {T.direccion} · {T.email}</p>
+  <h2>Qué datos tratamos</h2>
+  <p>
+    Esta web no tiene formularios ni crea cuentas de usuario. Si nos escribes por Instagram, WhatsApp o email, tratamos
+    los datos que nos facilites (nombre, contacto y mensaje) para responderte y, si te apuntas, gestionar tu reserva.
+  </p>
+  <h2>Base legal y conservación</h2>
+  <p>
+    La base legal es tu consentimiento al contactarnos y, si reservas, la ejecución del contrato de viaje. Conservamos los
+    datos el tiempo necesario para atender tu solicitud y cumplir las obligaciones legales.
+  </p>
+  <h2>Medición de visitas</h2>
+  <p>
+    Usamos Vercel Web Analytics, que mide visitas de forma agregada, sin cookies y sin identificarte personalmente.
+  </p>
+  <h2>Tus derechos</h2>
+  <p>
+    Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a
+    {T.email}. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).
+  </p>
+</Legal>

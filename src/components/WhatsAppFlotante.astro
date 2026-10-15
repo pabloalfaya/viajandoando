@@ -1,0 +1,40 @@
+---
+// Botón de WhatsApp fijo abajo a la derecha, en todas las páginas.
+// En móvil, en las páginas de viaje, sube para no tapar la barra de reserva.
+import { whatsappUrl } from "../config/site";
+import Icono from "./Icono.astro";
+
+const url = whatsappUrl("¡Hola! Tengo una pregunta sobre los viajes de Viajando Ando.");
+---
+
+{
+  url && (
+    <a href={url} class="wa" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp">
+      <Icono nombre="whatsapp" tam={30} />
+    </a>
+  )
+}
+
+<style>
+  .wa {
+    position: fixed;
+    z-index: 45;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: var(--crema);
+    border: 2px solid var(--crema);
+    transition: background-color .2s ease, transform .2s ease;
+  }
+  .wa:hover { background: var(--tinta); color: var(--crema); transform: scale(1.05); }
+  .wa:focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
+  /* Páginas de viaje: por encima de la barra fija de reserva (solo en móvil) */
+  @media (max-width: 959px) {
+    :global(body:has(.barra)) .wa { bottom: calc(88px + env(safe-area-inset-bottom)); }
+  }
+</style>

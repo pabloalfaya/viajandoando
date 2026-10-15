@@ -6,6 +6,7 @@ import "@fontsource/figtree/600.css";
 import "../styles/global.css";
 import Cabecera from "../components/Cabecera.astro";
 import Pie from "../components/Pie.astro";
+import WhatsAppFlotante from "../components/WhatsAppFlotante.astro";
 import { SITE } from "../config/site";
 import jost600 from "@fontsource/jost/files/jost-latin-600-normal.woff2?url";
 
@@ -74,5 +75,6 @@ const analitica = Boolean(process.env.VERCEL);
     </main>
     <slot name="antes-del-pie" />
     <Pie />
+    <WhatsAppFlotante />
   </body>
 </html>

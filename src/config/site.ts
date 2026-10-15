@@ -10,11 +10,11 @@ export const SITE = {
   // TODO: dominio definitivo (con https:// y sin barra final). Afecta a canonical, sitemap y Open Graph.
   dominio: "https://dominio-pendiente.example",
 
-  // TODO: usuario de Instagram de Amalia, sin la @ (p. ej. "viajandoando").
-  instagram: null as string | null,
+  // Usuario de Instagram, sin la @.
+  instagram: "viajandoand013" as string | null,
 
-  // TODO: número de WhatsApp con prefijo y sin espacios ni + (p. ej. "34600000000").
-  whatsapp: null as string | null,
+  // WhatsApp con prefijo y sin espacios ni + (+34 673 62 83 34).
+  whatsapp: "34673628334" as string | null,
 
   // TODO: email de contacto.
   email: null as string | null,

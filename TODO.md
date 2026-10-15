@@ -4,8 +4,8 @@ Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio
 
 ## Configuración (`src/config/site.ts`)
 - [ ] **Dominio** definitivo (`SITE.dominio`). Cámbialo también en `astro.config.mjs` (`DOMINIO`). Afecta a canonical, sitemap, robots.txt y Open Graph.
-- [ ] **Instagram**: usuario de Amalia, sin @ (`SITE.instagram`). Con él se activan la línea «@usuario» de la portada, el DM para reservar (ig.me) y `sameAs` en el JSON-LD.
-- [ ] **WhatsApp**: número con prefijo y sin espacios (`SITE.whatsapp`). Si se quiere reservar por WhatsApp: `SITE.reservaVia = "whatsapp"`.
+- [x] Instagram: viajandoand013 (hecho).
+- [x] WhatsApp: +34 673 62 83 34 (hecho). Botón fijo abajo a la derecha en todas las páginas. Si se quiere que el botón «Reserva tu plaza» lleve a WhatsApp en vez de a Instagram: `SITE.reservaVia = "whatsapp"`.
 - [ ] **Email** de contacto (`SITE.email`).
 - [ ] **creditoUrl**: web de desarrollo de Pablo para el crédito del pie (sin `sponsored`, nunca a Glowi).
 

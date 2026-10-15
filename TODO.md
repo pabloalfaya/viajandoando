@@ -14,8 +14,8 @@ Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio
 - [ ] **Itinerario y actividades siguen siendo de EJEMPLO** y se ven en la web con la marca «EJEMPLO — sustituir por el real».
 - [ ] Qué comidas están incluidas y cuáles no.
 
-**VA 002 · 4 – 9 dic 2026** (`marruecos-diciembre.md`): solo hay fechas.
-- [ ] `precio` (y entonces `estado: abierto`), qué incluye (hoy pone «Te lo confirmo muy pronto»), itinerario, plazas y alojamiento.
+**VA 002 · 4 – 9 dic 2026** (`marruecos-diciembre.md`): 450 €, plazas abiertas.
+- [ ] Qué incluye (hoy pone «Te lo confirmo muy pronto»), itinerario, plazas y alojamiento.
 
 **Los dos**
 - [ ] Que Amalia confirme los requisitos de entrada (pasaporte) de la FAQ del viaje.

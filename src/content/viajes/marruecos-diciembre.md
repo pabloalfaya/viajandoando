@@ -1,8 +1,7 @@
 ---
 # ------------------------------------------------------------------
-# Segundo viaje a Marruecos. Hay fechas; faltan precio, qué incluye,
-# plazas y alojamiento (TODO: Amalia). Mientras falte el precio, la web
-# muestra «Precio muy pronto» y el CTA «Avísame por Instagram».
+# Segundo viaje a Marruecos: 4 – 9 dic, 450 €. Faltan qué incluye,
+# itinerario, plazas y alojamiento (TODO: Amalia).
 # ------------------------------------------------------------------
 titulo: Marruecos
 codigo: VA 002
@@ -11,12 +10,12 @@ paisSlug: marruecos
 lugar: Marrakech · Desierto de Agafay
 frase: 6 días. Cero conocidos. Marruecos.
 cita: Si algo te da un poquito de miedo, a veces merece la pena hacerlo igualmente.
-descripcion: Viaje en grupo a Marruecos del 4 al 9 de diciembre de 2026 para gente que no se conoce. Medina de Marrakech, desierto y mucho más, con todo organizado.
-estado: proximamente
+descripcion: Viaje en grupo a Marruecos del 4 al 9 de diciembre de 2026 por 450 €, para gente que no se conoce. Medina de Marrakech, desierto y mucho más, con todo organizado.
+estado: abierto
 borrador: false
 fechaInicio: 2026-12-04
 fechaFin: 2026-12-09
-# precio: 0                 # TODO
+precio: 450
 # deposito: 0               # TODO
 # plazas: 0                 # TODO
 # alojamiento: ""           # TODO
@@ -53,4 +52,4 @@ faq:
 
 No es solo un viaje a Marruecos. Es perderte por una medina que parece un laberinto, regatear (fatal) en un zoco, ver atardecer en el desierto y acabar el día riéndote con gente que hace una semana no conocías.
 
-Las fechas ya están: del 4 al 9 de diciembre. El precio y el resto de detalles los publico muy pronto; si quieres enterarte antes que nadie, escríbeme por Instagram o por WhatsApp.
+Del 4 al 9 de diciembre, por 450 €. El resto de detalles los publico muy pronto; si tienes cualquier duda, escríbeme por Instagram o por WhatsApp.

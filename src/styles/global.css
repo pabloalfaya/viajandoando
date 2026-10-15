@@ -68,7 +68,7 @@ ul, ol { padding-left: 1.2em; }
 .texto { max-width: var(--ancho-texto); }
 .entradilla { font-size: var(--t-l); line-height: 1.4; color: var(--tinta-2); }
 .oscuro { background: var(--azul); color: var(--crema); }
-.oscuro p, .oscuro a { color: var(--crema); }
+.oscuro p, .oscuro a:not(.btn) { color: var(--crema); }
 
 /* ---------- Eyebrow ---------- */
 .eyebrow {

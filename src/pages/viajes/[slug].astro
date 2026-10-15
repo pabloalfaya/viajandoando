@@ -278,7 +278,8 @@ if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
 
 <style>
   /* Hero */
-  .vhero { min-height: 100svh; display: flex; align-items: flex-end; padding-block: 7.5rem 3rem; }
+  .vhero { min-height: 100svh; display: flex; align-items: flex-end; padding-block: 7.5rem calc(3rem + 72px); }
+  @media (min-width: 960px) { .vhero { padding-bottom: 3rem; } }
   .vhero__contenido { display: grid; gap: .9rem; justify-items: start; }
   .vhero p { margin: 0; }
   .vhero__frase { font-size: var(--t-l); font-weight: 600; max-width: 30ch; }

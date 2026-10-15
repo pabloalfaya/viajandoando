@@ -1,43 +1,26 @@
-# Astro Starter Kit: Minimal
+# Viajando Ando — web
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Web estática con Astro de los viajes en grupo de Amalia. Sin frameworks de UI ni Tailwind: CSS propio con los tokens de `src/styles/tokens.css`, que salen de la paleta del logo.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-## 🚀 Project Structure
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo (muestra también los viajes con `borrador: true`) |
+| `npm run build` | Genera `dist/` |
+| `npm run preview` | Sirve `dist/` en local |
+| `npm run comprobar` | Revisa en `dist/` los enlaces a Glowi (rel/target, header/footer, precios) |
+| `npm run verificar:glowi` | Comprueba que todas las URLs de Glowi responden 200 |
+| `npm run medios` | Regenera recortes, logo en círculo, favicons e imagen Open Graph |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Añadir un viaje
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Crea `src/content/viajes/<slug>.md` siguiendo `marruecos.md`. El esquema está en `src/content.config.ts`. Si faltan fechas o precio, la página muestra «Fechas y precio muy pronto».
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Glowi (afiliación)
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Las URLs solo están en `src/config/glowi.ts`.
+- Todo enlace a Glowi pasa por `EnlaceGlowi.astro`, que pone `target="_blank" rel="sponsored noopener"`.
+- Glowi solo aparece en `/internet-en-el-viaje/`, en la caja `<InternetViaje>` al final de cada viaje y en la pregunta 7 de la FAQ (como enlace interno). Nunca en la cabecera, el pie ni zonas comunes, y sin precios.
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Datos pendientes: ver [TODO.md](./TODO.md).

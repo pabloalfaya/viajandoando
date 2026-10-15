@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "medios": "node scripts/preparar-medios.mjs",
+    "verificar:glowi": "node scripts/verificar-glowi.mjs",
+    "comprobar": "node scripts/comprobar-dist.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

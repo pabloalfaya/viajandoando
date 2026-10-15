@@ -1,7 +1,7 @@
 ---
 // Tarjeta de viaje para el listado: foto en marco de arco plano con color sólido detrás.
 import { Image } from "astro:assets";
-import { ESTADO, PENDIENTE, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
+import { ESTADO, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
 
 interface Props {
   viaje: Viaje;
@@ -20,7 +20,7 @@ const fechas = fechasTexto(d);
     <p class="tarjeta__codigo">{d.codigo} · {ESTADO[d.estado]}</p>
     <h3>{d.titulo}</h3>
     <p class="tarjeta__lugar">{d.lugar}</p>
-    <p class="tarjeta__fechas">{fechas ?? PENDIENTE}{tienePrecio(d) && ` · ${euros(d.precio!)}`}</p>
+    <p class="tarjeta__fechas">{fechas ?? "Fechas muy pronto"} · {tienePrecio(d) ? euros(d.precio!) : "Precio muy pronto"}</p>
   </a>
 </article>
 

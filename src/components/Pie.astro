@@ -1,7 +1,7 @@
 ---
 // Pie en azul. Sin enlaces a Glowi (cuenta como esquema de enlaces en una zona común).
 import { SITE, instagramUrl, whatsappUrl } from "../config/site";
-import { getViajes } from "../lib/viajes";
+import { fechasCortas, getViajes } from "../lib/viajes";
 import Icono from "./Icono.astro";
 import Logo from "./Logo.astro";
 
@@ -34,7 +34,10 @@ const anio = new Date().getFullYear();
     <nav class="pie__col" aria-label="Próximos viajes">
       <h2>Próximos viajes</h2>
       <ul>
-        {viajes.map((v) => <li><a href={`/viajes/${v.id}/`}>{v.data.titulo}</a></li>)}
+        {viajes.map((v) => {
+          const f = fechasCortas(v.data);
+          return <li><a href={`/viajes/${v.id}/`}>{v.data.titulo}{f && ` · ${f}`}</a></li>;
+        })}
         <li><a href="/viajes/">Ver todos</a></li>
       </ul>
     </nav>

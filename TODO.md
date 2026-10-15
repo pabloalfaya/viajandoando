@@ -9,12 +9,17 @@ Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio
 - [ ] **Email** de contacto (`SITE.email`).
 - [ ] **creditoUrl**: web de desarrollo de Pablo para el crédito del pie (sin `sponsored`, nunca a Glowi).
 
-## Viaje a Marruecos (`src/content/viajes/marruecos.md`)
-- [ ] Fechas (`fechaInicio`, `fechaFin`), `precio`, `deposito`, `plazas` y `alojamiento`. Hoy están vacíos a propósito.
-- [ ] Cambiar `estado: proximamente` por `abierto` cuando se abran las plazas.
-- [ ] Frase definitiva («X días. X desconocidos. Marruecos.»).
-- [ ] **Itinerario, actividades, incluye y no incluye son de EJEMPLO**: sustituir por los reales.
-- [ ] FAQ del viaje: que Amalia confirme los requisitos de entrada (pasaporte).
+## Viajes a Marruecos (`src/content/viajes/`)
+**VA 001 · 28 nov – 2 dic 2026** (`marruecos-noviembre.md`): 450 €; incluye transfers, alojamiento, algunas comidas, guías locales y sorpresas.
+- [ ] `deposito` y `plazas` (si los hay) y `alojamiento` (dónde dormimos).
+- [ ] **Itinerario y actividades siguen siendo de EJEMPLO** y se ven en la web con la marca «EJEMPLO — sustituir por el real».
+- [ ] Qué comidas están incluidas y cuáles no.
+
+**VA 002 · 4 – 9 dic 2026** (`marruecos-diciembre.md`): solo hay fechas.
+- [ ] `precio` (y entonces `estado: abierto`), qué incluye (hoy pone «Te lo confirmo muy pronto»), itinerario, plazas y alojamiento.
+
+**Los dos**
+- [ ] Que Amalia confirme los requisitos de entrada (pasaporte) de la FAQ del viaje.
 - [ ] `turquia.md` es un viaje de **prueba** (`borrador: true`): solo se ve con `npm run dev`. Bórralo o déjalo como borrador.
 
 ## Legales (`src/pages/aviso-legal.astro`, `privacidad.astro`)

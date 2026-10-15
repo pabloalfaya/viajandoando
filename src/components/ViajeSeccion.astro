@@ -1,7 +1,7 @@
 ---
 // Un viaje como sección a pantalla completa (foto de fondo, frase, código, destino enorme…).
 import { Picture } from "astro:assets";
-import { ESTADO, PENDIENTE, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
+import { ESTADO, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
 import Boton from "./Boton.astro";
 
 interface Props {
@@ -22,12 +22,12 @@ const url = `/viajes/${viaje.id}/`;
     <p class="viaje__codigo"><span>{d.codigo}</span><span class="viaje__estado">{ESTADO[d.estado]}</span></p>
     <h3 class="viaje__destino" id={`viaje-${viaje.id}`}>{d.titulo}</h3>
     <dl class="viaje__datos">
-      <div><dt>Cuándo</dt><dd>{fechas ?? PENDIENTE}</dd></div>
+      <div><dt>Cuándo</dt><dd>{fechas ?? "Fechas muy pronto"}</dd></div>
       <div><dt>Dónde</dt><dd>{d.lugar}</dd></div>
-      {tienePrecio(d) && <div><dt>Precio</dt><dd>{euros(d.precio!)}</dd></div>}
+      <div><dt>Precio</dt><dd>{tienePrecio(d) ? euros(d.precio!) : "Muy pronto"}</dd></div>
     </dl>
     <blockquote class="viaje__cita">«{d.cita}»</blockquote>
-    <Boton href={url} variante="crema" aria-label={`Quiero ir a ${d.titulo}`}>Quiero ir</Boton>
+    <Boton href={url} variante="crema" aria-label={`Quiero ir a ${d.titulo}${fechas ? `, ${fechas}` : ""}`}>Quiero ir</Boton>
   </div>
 </article>
 

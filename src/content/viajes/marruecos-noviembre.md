@@ -1,25 +1,20 @@
 ---
-# ------------------------------------------------------------------
-# Viaje de MAQUETA. Fechas, precio, plazas y alojamiento están vacíos
-# a propósito (TODO: Amalia). Mientras falten, la web muestra
-# «Fechas y precio muy pronto» y el CTA «Avísame por Instagram».
-# ------------------------------------------------------------------
 titulo: Marruecos
 codigo: VA 001
 pais: Marruecos
 paisSlug: marruecos
 lugar: Marrakech · Desierto de Agafay
-frase: Medina, desierto y cascadas. Marruecos.        # TODO: frase definitiva («X días. X desconocidos. Marruecos.»)
+frase: 5 días. Cero conocidos. Marruecos.
 cita: Igual llegas sin conocer a nadie y vuelves con amigos para toda la vida.
-descripcion: Viaje en grupo a Marruecos para gente que no se conoce. Medina de Marrakech, desierto de Agafay y cascadas de Ouzoud, con todo organizado.
-estado: proximamente
+descripcion: Viaje en grupo a Marruecos del 28 de noviembre al 2 de diciembre de 2026 por 450 €. Transfers, alojamiento, algunas comidas, guías locales y muchas sorpresas.
+estado: abierto
 borrador: false
-# fechaInicio: 2027-00-00   # TODO
-# fechaFin: 2027-00-00      # TODO
+fechaInicio: 2026-11-28
+fechaFin: 2026-12-02
+precio: 450
 # plazas: 0                 # TODO
-# precio: 0                 # TODO (en euros, sin símbolo)
 # deposito: 0               # TODO
-# alojamiento: ""           # TODO
+# alojamiento: ""           # TODO: dónde dormimos (está incluido)
 portada: ../../assets/fotos/quads-agafay.jpg
 galeria:
   - ../../assets/fotos/amalia-medina-marrakech.jpg
@@ -43,32 +38,31 @@ actividades:
   - { icono: cascada, texto: "Excursión a las cascadas de Ouzoud" }
   - { icono: te, texto: "Té a la menta (muchos)" }
   - { icono: estrellas, texto: "Una noche bajo las estrellas" }
-# EJEMPLO — sustituir por el real (incluye / no incluye)
 incluye:
-  - Organización del viaje de principio a fin
-  - Acompañamiento de Amalia durante todo el viaje
-  - Grupo de WhatsApp antes de salir para ir conociéndonos
-  - Actividades marcadas en el itinerario
+  - Transfers
+  - Alojamiento
+  - Algunas comidas
+  - Acompañamiento por guías locales
+  - Muchas sorpresas
 noIncluye:
   - Vuelos (nunca están incluidos ✈️)
-  - Algunas comidas (te digo cuáles en cada día)
-  - Gastos personales y compras en el zoco
+  - Las comidas que no estén incluidas (te digo cuáles)
   - Internet en el viaje (te cuento cómo lo hago yo más abajo)
 # EJEMPLO — sustituir por el real (itinerario)
 itinerario:
-  - dia: Día 1
+  - dia: Día 1 · 28 nov
     titulo: Llegada a Marrakech
     texto: "EJEMPLO — sustituir por el real. Nos encontramos, dejamos las maletas y primera vuelta por la medina para ir abriendo boca."
-  - dia: Día 2
+  - dia: Día 2 · 29 nov
     titulo: La medina sin prisas
     texto: "EJEMPLO — sustituir por el real. Callejones, puertas imposibles, zocos y el primer regateo del grupo (que siempre sale regular)."
-  - dia: Día 3
+  - dia: Día 3 · 30 nov
     titulo: Desierto de Agafay
     texto: "EJEMPLO — sustituir por el real. Quads, camellos y atardecer en el desierto."
-  - dia: Día 4
+  - dia: Día 4 · 1 dic
     titulo: Cascadas de Ouzoud
     texto: "EJEMPLO — sustituir por el real. Excursión de día a las cascadas. Lleva calzado cómodo."
-  - dia: Día 5
+  - dia: Día 5 · 2 dic
     titulo: Vuelta a casa
     texto: "EJEMPLO — sustituir por el real. Último té a la menta y vuelta con mil historias que contar."
 faq:
@@ -81,4 +75,4 @@ faq:
 
 No es solo un viaje a Marruecos. Es perderte por una medina que parece un laberinto, regatear (fatal) en un zoco, ver atardecer en el desierto y acabar el día riéndote con gente que hace una semana no conocías.
 
-Yo me encargo de la organización: tú solo tienes que venir con ganas. Las fechas y el precio los publico muy pronto; si quieres enterarte antes que nadie, escríbeme por Instagram.
+Del 28 de noviembre al 2 de diciembre. Los transfers, el alojamiento, algunas comidas y los guías locales ya están: tú solo tienes que venir con ganas. Y prepárate, porque habrá muchas sorpresas.

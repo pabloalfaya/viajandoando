@@ -9,7 +9,7 @@ import InternetViaje from "../../components/InternetViaje.astro";
 import Preguntas from "../../components/Preguntas.astro";
 import { SITE, instagramDmUrl, reservaUrl } from "../../config/site";
 import { faqJsonLd } from "../../data/preguntas";
-import { ESTADO, PENDIENTE, euros, fechasTexto, getViajes, tienePrecio, type Viaje } from "../../lib/viajes";
+import { ESTADO, PENDIENTE, euros, fechasCortas, fechasTexto, getViajes, pendienteTexto, tienePrecio, type Viaje } from "../../lib/viajes";
 
 export async function getStaticPaths() {
   const viajes = await getViajes();
@@ -31,6 +31,8 @@ const ctaBarra = conPrecio && !completo ? `Reserva tu plaza · ${euros(d.precio!
 
 const descripcion =
   d.descripcion ?? `Viaje en grupo a ${d.pais} para gente que no se conoce: ${d.lugar}. ${fechas ?? PENDIENTE}.`;
+const pendiente = pendienteTexto(d) ?? PENDIENTE;
+const cortas = fechasCortas(d);
 
 const jsonLd: Record<string, unknown>[] = [
   {
@@ -57,7 +59,7 @@ const jsonLd: Record<string, unknown>[] = [
 if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
 ---
 
-<Base titulo={`Viaje a ${d.titulo}`} descripcion={descripcion} jsonLd={jsonLd} tipo="article">
+<Base titulo={`Viaje a ${d.titulo}${cortas ? ` (${cortas})` : ""}`} descripcion={descripcion} jsonLd={jsonLd} tipo="article">
   <!-- Hero -->
   <section class="vhero sobre-foto" aria-labelledby="vhero-titulo">
     <div class="foto-fondo">
@@ -77,7 +79,8 @@ if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
       <p class="vhero__codigo"><span>{d.codigo}</span><span class="vhero__estado">{ESTADO[d.estado]}</span></p>
       <h1 id="vhero-titulo" class="vhero__destino">{d.titulo}</h1>
       <dl class="vhero__datos">
-        <div><dt>Cuándo</dt><dd>{fechas ?? PENDIENTE}</dd></div>
+        <div><dt>Cuándo</dt><dd>{fechas ?? "Fechas muy pronto"}</dd></div>
+        <div><dt>Precio</dt><dd>{conPrecio ? euros(d.precio!) : "Muy pronto"}</dd></div>
         <div><dt>Dónde</dt><dd>{d.lugar}</dd></div>
         {d.plazas && <div><dt>Plazas</dt><dd>{d.plazas}</dd></div>}
       </dl>
@@ -167,7 +170,9 @@ if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
         <div class="incluye__col">
           <h3>Incluye</h3>
           <ul>
-            {d.incluye.map((x) => <li><Icono nombre="check" tam={20} class="incluye__si" />{x}</li>)}
+            {d.incluye.length > 0
+              ? d.incluye.map((x) => <li><Icono nombre="check" tam={20} class="incluye__si" />{x}</li>)
+              : <li>Te lo confirmo muy pronto.</li>}
           </ul>
         </div>
         <div class="incluye__col">
@@ -207,7 +212,7 @@ if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
           </>
         ) : (
           <>
-            <h2 id="reserva-titulo" class="reserva__precio">{PENDIENTE}</h2>
+            <h2 id="reserva-titulo" class="reserva__precio">{pendiente}</h2>
             <p class="entradilla">
               Estoy cerrando los últimos detalles. Escríbeme por Instagram y te aviso en cuanto abra las plazas.
             </p>
@@ -251,7 +256,7 @@ if (d.faq.length) jsonLd.push(faqJsonLd(d.faq));
 
   <!-- Barra fija de reserva (móvil) -->
   <div class="barra" slot="antes-del-pie">
-    <p class="barra__estado">{conPrecio ? (fechas ?? ESTADO[d.estado]) : PENDIENTE}</p>
+    <p class="barra__estado">{conPrecio ? (cortas ?? ESTADO[d.estado]) : pendiente}</p>
     <a href={ctaUrl} class="barra__cta" target="_blank" rel="noopener">{ctaBarra}</a>
   </div>
 </Base>

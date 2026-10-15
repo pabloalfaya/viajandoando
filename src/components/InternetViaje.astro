@@ -1,0 +1,63 @@
+---
+// Caja «¿Cómo tendré internet en el viaje?». Va AL FINAL de cada página de viaje o destino,
+// nunca en el layout global. Marruecos (o un país sin URL verificada) → enlace interno.
+import { glowiPais } from "../config/glowi";
+import CodigoDescuento from "./CodigoDescuento.astro";
+import EnlaceGlowi from "./EnlaceGlowi.astro";
+import Icono from "./Icono.astro";
+
+interface Props {
+  pais: string; // paisSlug, p. ej. "marruecos"
+  nombre?: string; // nombre visible, p. ej. "Turquía"
+}
+const { pais, nombre = pais } = Astro.props;
+const urlGlowi = pais === "marruecos" ? null : glowiPais(pais);
+---
+
+<aside class="internet" aria-labelledby="internet-titulo">
+  <div class="internet__cabecera">
+    <span class="internet__icono"><Icono nombre="senal" tam={20} /></span>
+    <h2 id="internet-titulo">¿Cómo tendré internet en el viaje?</h2>
+  </div>
+  <p class="internet__texto">
+    Yo viajo con una eSIM: la instalas antes de salir y tienes datos nada más aterrizar, sin cambiar de número. Con mi
+    código te ahorras un 10&nbsp;%.
+  </p>
+  <CodigoDescuento id={`codigo-${pais}`} transparencia="corta" />
+  <p class="internet__enlace">
+    {
+      urlGlowi ? (
+        <EnlaceGlowi href={urlGlowi}>Ver eSIM para {nombre} <span aria-hidden="true">→</span></EnlaceGlowi>
+      ) : (
+        <a href="/internet-en-el-viaje/">Cómo funciona <span aria-hidden="true">→</span></a>
+      )
+    }
+  </p>
+</aside>
+
+<style>
+  .internet {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 1rem + 2vw, 2rem);
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+    display: grid;
+    gap: 1rem;
+  }
+  .internet__cabecera { display: flex; align-items: center; gap: .75rem; }
+  .internet__cabecera h2 { font-size: var(--t-l); margin: 0; }
+  .internet__icono {
+    display: grid; place-items: center; flex: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px dashed var(--verde); color: var(--verde);
+  }
+  .internet__texto { margin: 0; color: var(--tinta-2); }
+  .internet__enlace { margin: 0; }
+  .internet__enlace a {
+    display: inline-flex; align-items: center; min-height: 48px;
+    font-weight: 600; color: var(--azul);
+  }
+  .internet__enlace a:hover { color: var(--rojo); }
+</style>

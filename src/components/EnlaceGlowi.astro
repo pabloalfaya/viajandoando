@@ -1,0 +1,16 @@
+---
+// Todo enlace a glowisim.com pasa por aquí. Siempre target="_blank" y rel="sponsored noopener"
+// (directrices de Google para enlaces de afiliado). Nunca lo uses en cabecera, pie ni zonas comunes.
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"a">, "href" | "target" | "rel"> {
+  href: string;
+}
+const { href, ...resto } = Astro.props;
+
+if (!new URL(href).hostname.endsWith("glowisim.com")) {
+  throw new Error(`EnlaceGlowi solo admite URLs de glowisim.com (recibido: ${href})`);
+}
+---
+
+<a href={href} target="_blank" rel="sponsored noopener" {...resto}><slot /></a>

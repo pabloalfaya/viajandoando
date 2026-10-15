@@ -1,0 +1,48 @@
+---
+// Logo circular de Viajando Ando (imagen original recortada en círculo, sin redibujar ni recolorear)
+// junto al nombre en texto. `soloLogo` muestra solo el círculo.
+import { Image } from "astro:assets";
+import logo from "../assets/marca/logo-circular.png";
+
+interface Props {
+  tam?: number;
+  tamEscritorio?: number;
+  soloLogo?: boolean;
+  class?: string;
+  cargaInmediata?: boolean;
+}
+const { tam = 44, tamEscritorio = tam, soloLogo = false, class: clase, cargaInmediata = false } = Astro.props;
+---
+
+<span class:list={["marca", clase]} style={`--marca-m: ${tam}px; --marca-d: ${tamEscritorio}px`}>
+  <Image
+    src={logo}
+    alt={soloLogo ? "Viajando Ando" : ""}
+    width={tamEscritorio * 2}
+    height={tamEscritorio * 2}
+    widths={[tam * 2, tamEscritorio * 2, tamEscritorio * 3].filter((v, i, a) => a.indexOf(v) === i)}
+    sizes={`${tamEscritorio}px`}
+    format="webp"
+    quality={80}
+    class="marca__logo"
+    loading={cargaInmediata ? "eager" : "lazy"}
+  />
+  {!soloLogo && <span class="marca__texto">Viajando Ando</span>}
+</span>
+
+<style>
+  .marca { display: inline-flex; align-items: center; gap: .65rem; }
+  .marca__logo { width: var(--marca-m); height: var(--marca-m); border-radius: 50%; flex: none; }
+  .marca__texto {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  @media (min-width: 960px) {
+    .marca__logo { width: var(--marca-d); height: var(--marca-d); }
+  }
+</style>

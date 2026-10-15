@@ -1,0 +1,17 @@
+---
+// Botón en píldora con círculo y flecha. variante: "rojo" (principal), "crema" (sobre foto), "borde".
+import type { HTMLAttributes } from "astro/types";
+import Icono from "./Icono.astro";
+
+interface Props extends HTMLAttributes<"a"> {
+  href: string;
+  variante?: "rojo" | "crema" | "borde";
+  icono?: "flecha" | "instagram" | "whatsapp" | "abajo";
+}
+const { href, variante = "rojo", icono = "flecha", class: clase, ...resto } = Astro.props;
+---
+
+<a href={href} class:list={["btn", variante !== "rojo" && `btn--${variante}`, clase]} {...resto}>
+  <span><slot /></span>
+  <span class="btn__flecha"><Icono nombre={icono} tam={18} /></span>
+</a>

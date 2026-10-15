@@ -1,0 +1,103 @@
+---
+// Pie en azul. Sin enlaces a Glowi (cuenta como esquema de enlaces en una zona común).
+import { SITE, instagramUrl, whatsappUrl } from "../config/site";
+import { getViajes } from "../lib/viajes";
+import Icono from "./Icono.astro";
+import Logo from "./Logo.astro";
+
+const viajes = await getViajes();
+const wa = whatsappUrl();
+const anio = new Date().getFullYear();
+---
+
+<footer class="pie oscuro">
+  <div class="contenedor pie__rejilla">
+    <div class="pie__marca">
+      <Logo tam={88} soloLogo />
+      <p>
+        Viajes en grupo para gente que no se conoce. Desconocidos al salir, anécdotas al volver. Yo pongo la organización;
+        tú, las ganas.
+      </p>
+    </div>
+
+    <nav class="pie__col" aria-label="Páginas">
+      <h2>Páginas</h2>
+      <ul>
+        <li><a href="/#quien-soy">Quién soy</a></li>
+        <li><a href="/viajes/">Viajes</a></li>
+        <li><a href="/#como-son">Cómo son</a></li>
+        <li><a href="/internet-en-el-viaje/">Internet en el viaje</a></li>
+        <li><a href="/#preguntas">Preguntas</a></li>
+      </ul>
+    </nav>
+
+    <nav class="pie__col" aria-label="Próximos viajes">
+      <h2>Próximos viajes</h2>
+      <ul>
+        {viajes.map((v) => <li><a href={`/viajes/${v.id}/`}>{v.data.titulo}</a></li>)}
+        <li><a href="/viajes/">Ver todos</a></li>
+      </ul>
+    </nav>
+
+    <div class="pie__col">
+      <h2>Redes</h2>
+      <ul>
+        <li>
+          <a href={instagramUrl} target="_blank" rel="noopener" class="pie__red">
+            <Icono nombre="instagram" tam={20} /> Instagram
+          </a>
+        </li>
+        {
+          wa && (
+            <li>
+              <a href={wa} target="_blank" rel="noopener" class="pie__red">
+                <Icono nombre="whatsapp" tam={20} /> WhatsApp
+              </a>
+            </li>
+          )
+        }
+        {SITE.email && <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>}
+      </ul>
+    </div>
+  </div>
+
+  <div class="contenedor pie__legal">
+    <p>© {anio} {SITE.nombre}</p>
+    <ul>
+      <li><a href="/aviso-legal/">Aviso legal</a></li>
+      <li><a href="/privacidad/">Privacidad</a></li>
+      <li><a href="/cookies/">Cookies</a></li>
+    </ul>
+    <p>
+      Diseño web: {SITE.creditoUrl ? <a href={SITE.creditoUrl}>{SITE.credito}</a> : SITE.credito}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pie { padding-block: 4rem calc(2rem + env(safe-area-inset-bottom)); }
+  .pie__rejilla { display: grid; gap: 2.5rem; }
+  .pie__marca p { margin-top: 1.25rem; max-width: 34ch; }
+  .pie h2 {
+    font-family: var(--f-body); font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .22em; margin: 0 0 .75rem;
+  }
+  .pie ul { list-style: none; margin: 0; padding: 0; }
+  .pie__col a, .pie__legal a {
+    display: inline-flex; align-items: center; gap: .5rem;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .pie a:hover { text-decoration: underline; color: var(--crema); }
+  .pie__legal {
+    margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--crema) 30%, transparent);
+    display: flex; flex-wrap: wrap; gap: .25rem 2rem; align-items: center;
+    font-size: var(--t-s);
+  }
+  .pie__legal p { margin: 0; }
+  .pie__legal ul { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+  @media (min-width: 720px) {
+    .pie__rejilla { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// Tarjeta de viaje para el listado: foto en marco de arco plano con color sólido detrás.
+import { Image } from "astro:assets";
+import { ESTADO, PENDIENTE, euros, fechasTexto, tienePrecio, type Viaje } from "../lib/viajes";
+
+interface Props {
+  viaje: Viaje;
+  color?: "verde" | "azul" | "rojo";
+}
+const { viaje, color = "verde" } = Astro.props;
+const d = viaje.data;
+const fechas = fechasTexto(d);
+---
+
+<article class="tarjeta aparece">
+  <a href={`/viajes/${viaje.id}/`} class="tarjeta__enlace">
+    <div class="arco tarjeta__foto" style={`--arco-color: var(--${color})`}>
+      <Image src={d.portada} alt="" widths={[360, 540, 720]} sizes="(min-width: 960px) 360px, 90vw" quality={72} />
+    </div>
+    <p class="tarjeta__codigo">{d.codigo} · {ESTADO[d.estado]}</p>
+    <h3>{d.titulo}</h3>
+    <p class="tarjeta__lugar">{d.lugar}</p>
+    <p class="tarjeta__fechas">{fechas ?? PENDIENTE}{tienePrecio(d) && ` · ${euros(d.precio!)}`}</p>
+  </a>
+</article>
+
+<style>
+  .tarjeta__enlace { display: grid; gap: .35rem; color: var(--tinta); text-decoration: none; }
+  .tarjeta__foto { aspect-ratio: 3 / 4; margin: 0 14px 1.4rem 0; }
+  .tarjeta h3 { margin: 0; font-size: var(--t-xl); text-transform: uppercase; }
+  .tarjeta__enlace:hover h3 { color: var(--rojo); }
+  .tarjeta p { margin: 0; }
+  .tarjeta__codigo { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .2em; color: var(--verde); }
+  .tarjeta__lugar { color: var(--tinta-2); }
+  .tarjeta__fechas { font-weight: 600; }
+</style>

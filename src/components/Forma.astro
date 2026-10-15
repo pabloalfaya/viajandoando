@@ -1,0 +1,34 @@
+---
+// Acento geométrico plano (círculo, cuarto o medio círculo), como los bloques del logo.
+// Decorativo. Úsalo con moderación: dos o tres por página.
+interface Props {
+  tipo?: "circulo" | "cuarto" | "medio";
+  color?: "rojo" | "azul" | "verde";
+  /** giro del cuarto o medio círculo, en grados (0, 90, 180, 270) */
+  giro?: number;
+  tam?: string;
+  class?: string;
+  style?: string;
+}
+const { tipo = "circulo", color = "rojo", giro = 0, tam = "120px", class: clase, style = "" } = Astro.props;
+---
+
+<span
+  class:list={["forma", `forma--${tipo}`, clase]}
+  style={`--forma-color: var(--${color}); --forma-tam: ${tam}; --forma-giro: ${giro}deg; ${style}`}
+  aria-hidden="true"></span>
+
+<style>
+  .forma {
+    display: block;
+    width: var(--forma-tam);
+    aspect-ratio: 1;
+    background: var(--forma-color);
+    rotate: var(--forma-giro);
+    pointer-events: none;
+    flex: none;
+  }
+  .forma--circulo { border-radius: 50%; }
+  .forma--cuarto { border-radius: 100% 0 0 0; }
+  .forma--medio { aspect-ratio: 2 / 1; border-radius: var(--forma-tam) var(--forma-tam) 0 0; }
+</style>

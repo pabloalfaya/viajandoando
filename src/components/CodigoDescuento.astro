@@ -1,0 +1,122 @@
+---
+// Cupón con el código de Glowi y botón «Copiar». Se usa en /internet-en-el-viaje/ y en <InternetViaje>.
+import { GLOWI } from "../config/glowi";
+import Icono from "./Icono.astro";
+
+interface Props {
+  /** "larga" en la página de internet; "corta" en la caja de los viajes. */
+  transparencia?: "larga" | "corta";
+  id?: string;
+}
+const { transparencia = "corta", id = "codigo-glowi" } = Astro.props;
+---
+
+<div class="cupon">
+  <p class="cupon__etiqueta" id={`${id}-etiqueta`}>Mi código, {GLOWI.descuento} de descuento</p>
+  <div class="cupon__fila">
+    <code class="cupon__codigo" id={`${id}-texto`}>{GLOWI.codigo}</code>
+    <button type="button" class="cupon__copiar" data-copiar={GLOWI.codigo} data-objetivo={`${id}-texto`} aria-describedby={`${id}-etiqueta`}>
+      <Icono nombre="copiar" tam={20} />
+      <span data-etiqueta>Copiar</span>
+    </button>
+  </div>
+  <p class="cupon__aviso" role="status" aria-live="polite" data-aviso></p>
+  <p class="cupon__nota">Se introduce en la pantalla de pago.</p>
+  <p class="cupon__transparencia">
+    {
+      transparencia === "larga"
+        ? "Enlace de afiliada: si compras con mi código, me llevo una pequeña comisión sin que te cueste más. Solo recomiendo lo que uso."
+        : "Enlace de afiliada: me llevo una pequeña comisión sin que te cueste más."
+    }
+  </p>
+</div>
+
+<style>
+  .cupon { display: grid; gap: .5rem; }
+  .cupon p { margin: 0; }
+  .cupon__etiqueta {
+    font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; color: var(--verde);
+  }
+  .cupon__fila { display: flex; flex-wrap: wrap; gap: .75rem; align-items: stretch; }
+  .cupon__codigo {
+    flex: 1 1 13rem;
+    display: grid; place-items: center;
+    min-height: 64px;
+    padding: .4em .8em;
+    border: 2px dashed var(--rojo);
+    border-radius: var(--radio);
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--f-display);
+    font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.2rem);
+    letter-spacing: .06em;
+    user-select: all;
+    -webkit-user-select: all;
+    overflow-wrap: anywhere;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* cuarto de círculo verde en la esquina, como los bloques del logo */
+  .cupon__codigo::after {
+    content: ""; position: absolute; right: 0; bottom: 0;
+    width: 28px; height: 28px;
+    background: var(--verde);
+    border-radius: 100% 0 0 0;
+  }
+  .cupon__copiar {
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+    min-height: 56px; min-width: 8.5rem;
+    padding: .5em 1.4em;
+    border: 0; border-radius: var(--radio-pill);
+    background: var(--rojo); color: var(--crema);
+    font: 600 var(--t-m)/1 var(--f-body);
+    cursor: pointer;
+    transition: background-color .2s ease;
+  }
+  .cupon__copiar:hover { background: var(--tinta); }
+  .cupon__copiar[data-copiado] { background: var(--verde); }
+  .cupon__aviso:empty { display: none; }
+  .cupon__aviso { color: var(--verde); font-weight: 600; font-size: var(--t-s); }
+  .cupon__nota { font-size: var(--t-s); color: var(--tinta-2); }
+  .cupon__transparencia { font-size: var(--t-s); color: var(--tinta-2); font-style: italic; }
+  @media (max-width: 420px) {
+    .cupon__copiar { flex: 1 1 100%; }
+  }
+</style>
+
+<script>
+  // Copiar al portapapeles; si falla, selecciona el texto para que se pueda copiar a mano.
+  document.addEventListener("click", async (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-copiar]");
+    if (!btn) return;
+    const texto = btn.dataset.copiar ?? "";
+    const etiqueta = btn.querySelector<HTMLElement>("[data-etiqueta]");
+    const aviso = btn.closest(".cupon")?.querySelector<HTMLElement>("[data-aviso]");
+    let copiado = false;
+    try {
+      await navigator.clipboard.writeText(texto);
+      copiado = true;
+    } catch {
+      const objetivo = document.getElementById(btn.dataset.objetivo ?? "");
+      if (objetivo) {
+        const rango = document.createRange();
+        rango.selectNodeContents(objetivo);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(rango);
+      }
+    }
+    if (aviso) aviso.textContent = copiado ? "Código copiado." : "Código seleccionado: cópialo con tu móvil.";
+    if (copiado && etiqueta) {
+      etiqueta.textContent = "¡Copiado!";
+      btn.dataset.copiado = "";
+      window.setTimeout(() => {
+        etiqueta.textContent = "Copiar";
+        delete btn.dataset.copiado;
+        if (aviso) aviso.textContent = "";
+      }, 2000);
+    }
+  });
+</script>

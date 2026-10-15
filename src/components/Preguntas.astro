@@ -1,0 +1,54 @@
+---
+// Acordeón accesible con <details>/<summary>. Las respuestas admiten HTML sencillo (enlaces internos).
+interface Props {
+  preguntas: { p: string; r: string }[];
+}
+const { preguntas } = Astro.props;
+---
+
+<div class="faq">
+  {
+    preguntas.map(({ p, r }) => (
+      <details class="faq__item">
+        <summary>
+          <span>{p}</span>
+          <span class="faq__mas" aria-hidden="true" />
+        </summary>
+        <div class="faq__respuesta" set:html={`<p>${r}</p>`} />
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .faq { border-top: 2px solid var(--tinta); }
+  .faq__item { border-bottom: 1px solid var(--linea); }
+  summary {
+    list-style: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+    min-height: 56px;
+    padding-block: 1.1rem;
+    cursor: pointer;
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1rem + .5vw, 1.3rem);
+    line-height: 1.25;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--rojo); }
+  .faq__mas {
+    position: relative; flex: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid currentColor;
+    transition: rotate .25s ease, background-color .25s ease;
+  }
+  .faq__mas::before, .faq__mas::after {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    width: 12px; height: 1.5px; background: currentColor;
+    translate: -50% -50%;
+  }
+  .faq__mas::after { rotate: 90deg; }
+  details[open] .faq__mas { rotate: 45deg; background: var(--rojo); border-color: var(--rojo); color: var(--crema); }
+  .faq__respuesta { padding: 0 0 1.5rem; max-width: var(--ancho-texto); color: var(--tinta-2); }
+  .faq__respuesta :global(a) { font-weight: 600; }
+</style>

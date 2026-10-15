@@ -1,16 +1,497 @@
 ---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Boton from "../components/Boton.astro";
+import Forma from "../components/Forma.astro";
+import Preguntas from "../components/Preguntas.astro";
+import ViajeSeccion from "../components/ViajeSeccion.astro";
+import { SITE, instagramUrl } from "../config/site";
+import { PREGUNTAS, faqJsonLd } from "../data/preguntas";
+import { getViajes } from "../lib/viajes";
+
+import posterHero from "../assets/fotos/hero-camellos-poster.jpg";
+import fotoMedina from "../assets/fotos/amalia-medina-marrakech.jpg";
+import fotoGrupo from "../assets/fotos/grupo-teguise-lanzarote.jpg";
+import fotoQuads from "../assets/fotos/quads-agafay.jpg";
+import posterOuzoud from "../assets/fotos/cascadas-ouzoud-poster.jpg";
+import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
+import fotoMirador from "../assets/fotos/mirador-del-rio-la-graciosa.jpg";
+import fotoCefalu from "../assets/fotos/playa-cefalu.jpg";
+import fotoBudapest from "../assets/fotos/parlamento-budapest-noche.jpg";
+import fotoTatra from "../assets/fotos/montes-tatra-zakopane.jpg";
+import fotoArco from "../assets/fotos/arco-cefalu-sol.jpg";
+import logoCircular from "../assets/marca/logo-circular.png";
+
+const viajes = await getViajes();
+
+const BLOQUES = [
+  {
+    titulo: "Desconocidos al salir, anécdotas al volver.",
+    texto:
+      "Aquí se viene a viajar con gente nueva, compartir experiencias y descubrir que puedes conectar con personas que hace dos días ni siquiera sabías que existían.",
+    foto: fotoGrupo,
+    alt: "Cinco amigos riéndose y posando frente a una pared blanca en Teguise, Lanzarote",
+  },
+  {
+    titulo: "Menos rutina, más historias.",
+    texto:
+      "Lugares increíbles, planes diferentes, culturas nuevas y momentos que no caben en una foto. Porque para ver lo de siempre ya tenemos el camino al trabajo.",
+    foto: fotoQuads,
+    alt: "Una fila de quads aparcados en el desierto de Agafay, con montañas al fondo y el cielo nublado",
+  },
+  {
+    titulo: "Salir de la zona de confort, pero con la maleta hecha.",
+    texto:
+      "No hace falta ser la persona más aventurera del mundo. A veces basta con atreverse a dar el primer paso, conocer gente nueva y decir que sí a un plan diferente.",
+    foto: posterOuzoud,
+    video: "/video/cascadas-ouzoud.mp4",
+    alt: "Las cascadas de Ouzoud, en Marruecos, cayendo entre paredes de roca rojiza",
+  },
+  {
+    titulo: "Viajar con todo organizado y la cabeza más libre.",
+    texto:
+      "Tú vienes con las ganas; yo me encargo de organizar la aventura. Así podrás centrarte en descubrir, disfrutar y vivir el viaje sin tener que coordinar hasta dónde vamos a cenar cada noche.",
+    foto: fotoPuerta,
+    alt: "Amalia apoyada en una gran puerta de madera con remaches en Marrakech",
+  },
+];
+
+const GALERIA = [
+  { foto: fotoMirador, lugar: "Lanzarote", alt: "La isla de La Graciosa vista desde el Mirador del Río, en Lanzarote" },
+  { foto: fotoCefalu, lugar: "Cefalú", alt: "Playa de Cefalú, en Sicilia, con las casas del pueblo y las montañas verdes detrás" },
+  { foto: fotoBudapest, lugar: "Budapest", alt: "El Parlamento de Budapest iluminado de noche junto al Danubio" },
+  { foto: fotoTatra, lugar: "Zakopane", alt: "Los montes Tatra nevados vistos desde un mirador en Zakopane, Polonia" },
+  { foto: fotoMedina, lugar: "Marrakech", alt: "Amalia en un callejón de la medina de Marrakech, con un gato en primer plano" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    name: SITE.nombre,
+    description: SITE.descripcion,
+    url: new URL("/", SITE.dominio).href,
+    logo: new URL("/icon-512.png", SITE.dominio).href,
+    image: new URL("/og/viajando-ando.jpg", SITE.dominio).href,
+    ...(SITE.instagram ? { sameAs: [instagramUrl] } : {}),
+    ...(SITE.email ? { email: SITE.email } : {}),
+  },
+  faqJsonLd(PREGUNTAS),
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  titulo="Viajes en grupo para gente que no se conoce"
+  descripcion="Viajes en grupo con desconocidos a Marruecos y más destinos, con todo organizado. Desconocidos al salir, anécdotas al volver. ¿Te vienes?"
+  jsonLd={jsonLd}
+>
+  <!-- 1. Portada con vídeo -->
+  <section class="hero sobre-foto" aria-labelledby="hero-titulo">
+    <div class="foto-fondo hero__medio">
+      <Image
+        src={posterHero}
+        alt=""
+        widths={[480, 832]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        quality={70}
+        class="hero__poster"
+      />
+      <video
+        class="hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={posterHero.src}
+        aria-hidden="true"
+        data-video-hero
+      >
+        <source src="/video/hero-camellos.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="contenedor hero__contenido">
+      <h1 id="hero-titulo">
+        No hace falta tener un plan de vida, pero un plan de <span class="acento">viaje</span> ayuda.
+      </h1>
+      <p class="hero__sub">
+        Personas que no se conocen, destinos increíbles y aventuras que probablemente acabaremos contando mil veces.
+      </p>
+      <p class="hero__sub hero__sub--extra">
+        Viajes para salir de la rutina, descubrir mundo, conocer gente y hacer esas cosas que llevas tiempo diciendo que
+        algún día harás.
+      </p>
+      <p class="hero__pregunta">¿Te vienes o te lo contamos por Instagram?</p>
+      <div class="botones">
+        <Boton href="/viajes/" variante="crema">Ver próximos viajes</Boton>
+        <Boton href={instagramUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">
+          Ven a cotillear a Instagram
+        </Boton>
+      </div>
+      <p class="hero__prueba">
+        <Image src={logoCircular} alt="" width={28} height={28} widths={[28, 56]} sizes="28px" format="webp" />
+        {SITE.instagram ? <>Las aventuras, en directo en <strong>@{SITE.instagram}</strong></> : <>Las aventuras, en directo en Instagram</>}
+      </p>
+    </div>
+  </section>
+  <script is:inline>
+    // Con «reducir movimiento» o «ahorro de datos», solo el póster: se quita el vídeo antes de descargarlo.
+    (function () {
+      var v = document.querySelector("[data-video-hero]");
+      if (!v) return;
+      var reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var ahorro = navigator.connection && navigator.connection.saveData;
+      if (reducir || ahorro) {
+        v.pause();
+        v.removeAttribute("autoplay");
+        v.querySelectorAll("source").forEach(function (s) { s.remove(); });
+        v.load();
+        v.hidden = true;
+      }
+    })();
+  </script>
+
+  <!-- 2. Quién soy -->
+  <section id="quien-soy" class="seccion" aria-labelledby="quien-titulo">
+    <div class="contenedor manifiesto">
+      <div class="manifiesto__foto aparece">
+        <Forma tipo="circulo" color="rojo" tam="clamp(90px, 22vw, 150px)" class="manifiesto__circulo" />
+        <div class="arco" style="--arco-color: var(--azul)">
+          <Image
+            src={fotoMedina}
+            alt="Amalia sonriendo en un callejón de la medina de Marrakech, con una bici apoyada en la pared y un gato en primer plano"
+            widths={[360, 540, 720, 960]}
+            sizes="(min-width: 960px) 480px, 88vw"
+            quality={72}
+          />
+        </div>
+      </div>
+      <div class="manifiesto__texto">
+        <p class="eyebrow">¿Quién soy?</p>
+        <h2 id="quien-titulo">Hola, soy la que te va a <span class="acento">liar</span> para viajar.</h2>
+        <p class="entradilla">
+          Bueno, liar, no. Convencerte de que hay vida más allá de tu rutina, tu sofá y ese grupo de WhatsApp en el que
+          lleváis tres años diciendo que tenéis que hacer un viaje.
+        </p>
+        <p>
+          Soy de las que piensan que la vida está para vivirla, que hay que reírse mucho y que, si algo te da un poquito de
+          miedo, a veces merece la pena hacerlo igualmente.
+        </p>
+        <p>
+          Quiero descubrir mundo, conocer personas y volver a casa con mil historias que contar. Y pensé: ¿por qué no
+          organizar viajes para que otras personas puedan vivir lo mismo?
+        </p>
+        <p>
+          Así que, si tú también tienes ganas de hacer cosas diferentes, prepara la maleta. Yo pongo toda la organización,
+          el mundo pone el escenario y las anécdotas… ya veremos cómo las explicamos al volver.
+        </p>
+        <p class="manifiesto__pregunta">¿Te vienes a descubrirlo?</p>
+        <ul class="rasgos">
+          <li><span class="rasgos__punto" style="--c: var(--rojo)"></span>Reírse mucho</li>
+          <li><span class="rasgos__punto" style="--c: var(--azul)"></span>Gente nueva</li>
+          <li><span class="rasgos__punto" style="--c: var(--verde)"></span>Todo organizado</li>
+        </ul>
+        <Boton href="/viajes/">Quiero ver los viajes</Boton>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Cómo son -->
+  <section id="como-son" class="seccion como" aria-labelledby="como-titulo">
+    <div class="contenedor">
+      <p class="eyebrow">¿Qué son estos viajes?</p>
+      <h2 id="como-titulo">Mucho más que hacer <span class="acento">turismo</span>.</h2>
+      <div class="filas">
+        {
+          BLOQUES.map((b) => (
+            <article class="fila aparece">
+              <div class="fila__foto">
+                {b.video ? (
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    poster={b.foto.src}
+                    aria-label={b.alt}
+                    data-video-perezoso={b.video}
+                    width={b.foto.width}
+                    height={b.foto.height}
+                  />
+                ) : (
+                  <Image src={b.foto} alt={b.alt} widths={[360, 540, 720, 960]} sizes="(min-width: 960px) 520px, 92vw" quality={70} />
+                )}
+              </div>
+              <div class="fila__texto">
+                <h3>{b.titulo}</h3>
+                <p>{b.texto}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ¿Por qué con desconocidos? -->
+  <section class="seccion porque" aria-labelledby="porque-titulo">
+    <Forma tipo="cuarto" color="azul" tam="clamp(110px, 26vw, 260px)" giro={180} class="porque__forma" />
+    <div class="contenedor">
+      <h2 id="porque-titulo">Vale, pero ¿por qué iba a viajar con <span class="acento">desconocidos</span>?</h2>
+      <ol class="porques">
+        <li>
+          Porque esperar a que tus amigos tengan dinero, vacaciones, ganas de viajar y exactamente el mismo destino soñado
+          puede convertirse en una actividad de jubilación.
+        </li>
+        <li>Porque conocer gente nueva también forma parte de la aventura.</li>
+        <li>Porque hay experiencias que se disfrutan el doble cuando las compartes.</li>
+        <li>
+          Y porque, aunque al principio dé un poco de vértigo apuntarse a un viaje sin conocer a nadie, puede acabar siendo
+          una de esas decisiones que te alegras muchísimo de haber tomado.
+        </li>
+      </ol>
+      <div class="texto porque__cierre">
+        <p>
+          Aquí no necesitas venir acompañado, ser el alma de la fiesta ni tener experiencia viajando por medio mundo. Solo
+          necesitas curiosidad, ganas de vivir algo diferente y cierta tolerancia a que las mejores historias no siempre
+          salgan exactamente como estaban previstas.
+        </p>
+        <Boton href="/viajes/">Vale, me has convencido</Boton>
+      </div>
+    </div>
+  </section>
+  <section class="lema oscuro" aria-label="Lema">
+    <div class="contenedor">
+      <p class="lema__texto">
+        No prometo que vuelvas siendo la misma persona. Pero sí que tendrás una aventura por delante que merece la pena
+        <span class="acento">vivir</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. Próximas aventuras -->
+  <section id="viajes" class="seccion aventuras" aria-labelledby="aventuras-titulo">
+    <div class="contenedor aventuras__intro">
+      <div>
+        <p class="eyebrow">Próximas aventuras</p>
+        <h2 id="aventuras-titulo">El mundo es demasiado grande para quedarse <span class="acento">mirando</span>.</h2>
+      </div>
+      <div class="texto">
+        <p class="entradilla">
+          ¿Playa, montaña, ciudades que parecen de película o lugares que ni siquiera sabías que querías conocer?
+        </p>
+        <p>
+          Aquí encontrarás los próximos viajes, con toda la información para elegir tu siguiente aventura: destino, fechas,
+          itinerario, precio y qué incluye cada experiencia.
+        </p>
+        <p>Tú eliges el destino. Yo preparo el plan. Y juntos vemos qué historias salen de ahí.</p>
+        <Boton href="/viajes/">Descubrir los viajes</Boton>
+      </div>
+    </div>
+  </section>
+  {viajes.map((v) => <ViajeSeccion viaje={v} />)}
+
+  <section class="seccion galeria" aria-labelledby="galeria-titulo">
+    <div class="contenedor">
+      <p class="eyebrow">Fotos de viaje</p>
+      <h2 id="galeria-titulo" class="galeria__titulo">Por donde ya hemos <span class="acento">pasado</span></h2>
+    </div>
+    <ul class="galeria__pista" tabindex="0" aria-label="Galería de destinos (desliza en horizontal)">
+      {
+        GALERIA.map((g) => (
+          <li class="galeria__item">
+            <figure>
+              <Image src={g.foto} alt={g.alt} widths={[300, 450, 600]} sizes="(min-width: 960px) 340px, 72vw" quality={68} />
+              <figcaption>{g.lugar}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- 6. Preguntas -->
+  <section id="preguntas" class="seccion preguntas" aria-labelledby="preguntas-titulo">
+    <div class="contenedor preguntas__rejilla">
+      <div>
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 id="preguntas-titulo">
+          Vale, te quieres venir… pero vamos a resolver unas <span class="acento">cosillas</span> antes.
+        </h2>
+      </div>
+      <Preguntas preguntas={PREGUNTAS} />
+    </div>
+  </section>
+
+  <!-- Cierre -->
+  <section class="cierre sobre-foto" aria-labelledby="cierre-titulo">
+    <div class="foto-fondo">
+      <Image src={fotoArco} alt="" widths={[480, 800, 1200, 1600]} sizes="100vw" quality={65} />
+    </div>
+    <div class="contenedor cierre__contenido">
+      <Image src={logoCircular} alt="" width={96} height={96} widths={[96, 192]} sizes="96px" format="webp" class="cierre__logo" />
+      <h2 id="cierre-titulo">¿Nos <span class="acento">vamos</span>?</h2>
+      <div class="botones">
+        <Boton href="/viajes/" variante="crema">Ver próximos viajes</Boton>
+        <Boton href={instagramUrl} variante="borde" icono="instagram" target="_blank" rel="noopener">Instagram</Boton>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Vídeos secundarios: se cargan y reproducen solo al acercarse a la pantalla (y nunca con
+  // «reducir movimiento» o «ahorro de datos», que se quedan con el póster).
+  const reducir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ahorro = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+  const videos = document.querySelectorAll<HTMLVideoElement>("[data-video-perezoso]");
+  if (!reducir && !ahorro && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entradas) => {
+        for (const e of entradas) {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) {
+            if (!v.src) v.src = v.dataset.videoPerezoso!;
+            v.play().catch(() => {});
+          } else if (v.src) v.pause();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    videos.forEach((v) => io.observe(v));
+  }
+</script>
+
+<style>
+  /* Portada */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    padding-block: 7.5rem 2.5rem;
+  }
+  .hero__medio { background: var(--tinta); }
+  .hero__poster, .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 56% 50%; }
+  .hero__contenido { display: grid; gap: 1rem; justify-items: start; }
+  .hero h1 {
+    font-size: clamp(2.1rem, 1.3rem + 4.2vw, 4.6rem);
+    line-height: 1;
+    max-width: 17ch;
+    margin: 0;
+  }
+  .hero p { margin: 0; }
+  .hero__sub { font-size: var(--t-m); max-width: 46ch; }
+  .hero__sub--extra { display: none; }
+  .hero__pregunta { font-weight: 700; font-size: var(--t-m); }
+  .hero__prueba { display: flex; align-items: center; gap: .6rem; font-size: var(--t-s); margin-top: .5rem; }
+  .hero__prueba img { border-radius: 50%; }
+  @media (min-width: 720px) {
+    .hero__sub { font-size: var(--t-l); line-height: 1.4; }
+    .hero__sub--extra { display: block; font-size: var(--t-m); }
+  }
+
+  /* Manifiesto */
+  .manifiesto { display: grid; gap: 3rem; align-items: center; }
+  .manifiesto__foto { position: relative; max-width: 480px; width: calc(100% - 14px); }
+  .manifiesto__foto .arco { aspect-ratio: 3 / 4; }
+  .manifiesto__circulo { position: absolute; z-index: 2; right: -10px; bottom: 12%; }
+  .manifiesto__pregunta { font-family: var(--f-display); font-weight: 600; font-size: var(--t-l); text-transform: uppercase; }
+  .rasgos { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+  .rasgos li {
+    display: inline-flex; align-items: center; gap: .55rem;
+    padding: .45rem 1rem .45rem .6rem;
+    border: 1.5px solid var(--tinta); border-radius: var(--radio-pill);
+    font-weight: 600; font-size: var(--t-s);
+  }
+  .rasgos__punto { width: 14px; height: 14px; border-radius: 50%; background: var(--c); }
+  @media (min-width: 960px) {
+    .manifiesto { grid-template-columns: 5fr 6fr; gap: 5rem; }
+  }
+
+  /* Cómo son */
+  .como { background: var(--papel); }
+  .filas { display: grid; gap: clamp(3rem, 2rem + 4vw, 6rem); margin-top: 3rem; }
+  .fila { display: grid; gap: 1.5rem; align-items: center; }
+  .fila__foto { aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radio); background: var(--crema); }
+  .fila__foto :is(img, video) { width: 100%; height: 100%; object-fit: cover; }
+  .fila h3 { font-size: var(--t-xl); font-weight: 600; text-transform: uppercase; line-height: 1.02; }
+  .fila p { color: var(--tinta-2); font-size: var(--t-l); line-height: 1.45; max-width: 40ch; }
+  @media (min-width: 760px) {
+    .fila { grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .fila:nth-child(even) .fila__foto { order: 2; }
+    .fila__foto { aspect-ratio: 1; }
+  }
+
+  /* Por qué */
+  .porque { overflow: hidden; }
+  .porque__forma { position: absolute; top: 0; right: 0; }
+  .porque h2 { max-width: 20ch; position: relative; }
+  .porques { list-style: none; padding: 0; margin: 2.5rem 0 3rem; display: grid; gap: 1.5rem; }
+  .porques li {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(1.35rem, 1.1rem + 1.4vw, 2.15rem);
+    line-height: 1.2;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--tinta);
+    max-width: 36ch;
+  }
+  .porque__cierre p { font-size: var(--t-l); line-height: 1.45; color: var(--tinta-2); }
+  .lema { padding-block: clamp(3.5rem, 3rem + 4vw, 6rem); }
+  .lema__texto {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 1rem + 2.6vw, 3rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    max-width: 28ch;
+  }
+
+  /* Próximas aventuras */
+  .aventuras__intro { display: grid; gap: 1.5rem; }
+  @media (min-width: 960px) {
+    .aventuras__intro { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: end; }
+  }
+
+  /* Galería */
+  .galeria { padding-bottom: clamp(3rem, 2rem + 4vw, 6rem); }
+  .galeria__pista {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0 var(--lateral) 1rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(72vw, 340px);
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--lateral);
+    overscroll-behavior-x: contain;
+  }
+  .galeria__item { scroll-snap-align: start; }
+  .galeria figure { margin: 0; }
+  .galeria img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--radio); }
+  .galeria figcaption {
+    margin-top: .6rem; font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+  }
+  @media (min-width: 1180px) {
+    .galeria__pista { padding-inline: max(var(--lateral), calc((100vw - var(--ancho)) / 2)); }
+  }
+
+  /* Preguntas */
+  .preguntas { background: var(--papel); }
+  .preguntas__rejilla { display: grid; gap: 2rem; }
+  @media (min-width: 960px) {
+    .preguntas__rejilla { grid-template-columns: 2fr 3fr; gap: 5rem; align-items: start; }
+  }
+
+  /* Cierre */
+  .cierre { min-height: 80svh; display: grid; place-items: center; text-align: center; padding-block: 6rem; }
+  .cierre__contenido { display: grid; justify-items: center; gap: 1.25rem; }
+  .cierre__logo { border-radius: 50%; }
+  .cierre h2 { font-size: var(--t-xxl); margin: 0; }
+  .cierre .botones { justify-content: center; }
+</style>

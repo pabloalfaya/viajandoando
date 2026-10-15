@@ -1,0 +1,30 @@
+/* Tokens de Viajando Ando: la paleta sale del logo. No uses colores fuera de estos. */
+:root {
+  --crema:   #F6EADC;  /* fondo principal (el fondo del logo) */
+  --papel:   #FBF5EC;  /* tarjetas, cabecera */
+  --tinta:   #111111;  /* texto principal (las letras del logo) */
+  --tinta-2: #4A4540;  /* texto secundario */
+  --rojo:    #D11E12;  /* acento principal. En el logo es #D51F12: oscurecido lo mínimo para que
+                          el texto crema sobre rojo llegue a AA (4,39 → 4,54:1) */
+  --azul:    #01458E;  /* secundario: enlaces, franjas oscuras, pie */
+  --verde:   #036240;  /* terciario: eyebrows, chips, detalles, caja de internet */
+  --linea:   color-mix(in srgb, var(--tinta) 14%, transparent);
+
+  /* Tipografía (autoalojada con @fontsource) */
+  --f-display: "Jost", "Futura", system-ui, sans-serif;   /* titulares: geométrica, como las letras del logo */
+  --f-body:    "Figtree", system-ui, sans-serif;          /* texto */
+
+  /* Escala (fluida, mobile first) */
+  --t-xs: 0.78rem; --t-s: 0.9rem; --t-m: 1.05rem;
+  --t-l: clamp(1.3rem, 1.1rem + .9vw, 1.6rem);
+  --t-xl: clamp(1.9rem, 1.3rem + 2.6vw, 3.1rem);
+  --t-xxl: clamp(2.8rem, 1.6rem + 6vw, 6.25rem);   /* nombre del destino */
+
+  --radio-pill: 999px; --radio: 14px;
+  --ancho: 1180px; --ancho-texto: 64ch;
+
+  /* Derivados (siempre a partir de los tokens de arriba) */
+  --lateral: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  --velo: color-mix(in srgb, var(--tinta) 58%, transparent);   /* velado plano sobre fotos */
+  --papel-velo: color-mix(in srgb, var(--papel) 88%, transparent);
+}

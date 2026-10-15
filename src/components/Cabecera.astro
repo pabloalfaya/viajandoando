@@ -1,0 +1,159 @@
+---
+// Cabecera flotante en píldora. Sin enlaces externos salvo Instagram (nunca Glowi).
+import { instagramUrl } from "../config/site";
+import Icono from "./Icono.astro";
+import Logo from "./Logo.astro";
+
+const MENU = [
+  { texto: "Quién soy", href: "/#quien-soy" },
+  { texto: "Viajes", href: "/#viajes" },
+  { texto: "Cómo son", href: "/#como-son" },
+  { texto: "Internet en el viaje", href: "/internet-en-el-viaje/" },
+  { texto: "Preguntas", href: "/#preguntas" },
+];
+const ruta = Astro.url.pathname;
+---
+
+<header class="cabecera">
+  <div class="cabecera__pildora">
+    <a href="/" class="cabecera__logo">
+      <Logo tam={44} tamEscritorio={52} cargaInmediata />
+    </a>
+    <button
+      type="button"
+      class="cabecera__boton"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      data-menu-boton
+    >
+      <span class="sr-only" data-menu-texto>Abrir menú</span>
+      <Icono nombre="menu" class="i-abrir" />
+      <Icono nombre="cerrar" class="i-cerrar" />
+    </button>
+    <nav id="menu-principal" class="cabecera__nav" aria-label="Principal" data-menu>
+      <ul>
+        {
+          MENU.map((m) => (
+            <li>
+              <a href={m.href} aria-current={ruta === m.href ? "page" : undefined}>
+                {m.texto}
+              </a>
+            </li>
+          ))
+        }
+        <li class="cabecera__ig">
+          <a href={instagramUrl} target="_blank" rel="noopener">
+            <Icono nombre="instagram" titulo="Instagram de Viajando Ando" />
+            <span class="cabecera__ig-texto">Instagram</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .cabecera {
+    position: fixed;
+    z-index: 50;
+    top: max(10px, env(safe-area-inset-top));
+    left: var(--lateral);
+    right: var(--lateral);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .cabecera__pildora {
+    pointer-events: auto;
+    width: 100%;
+    max-width: var(--ancho);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .35rem .4rem .35rem .4rem;
+    border-radius: var(--radio-pill);
+    background: var(--papel-velo);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border: 1px solid var(--linea);
+  }
+  .cabecera__logo { display: flex; align-items: center; min-height: 48px; color: var(--tinta); text-decoration: none; }
+  .cabecera__boton {
+    display: grid; place-items: center;
+    width: 48px; height: 48px;
+    border: 0; border-radius: 50%;
+    background: var(--tinta); color: var(--crema);
+    cursor: pointer;
+  }
+  .cabecera__boton .i-cerrar { display: none; }
+  .cabecera__boton[aria-expanded="true"] .i-cerrar { display: block; }
+  .cabecera__boton[aria-expanded="true"] .i-abrir { display: none; }
+
+  .cabecera__nav ul { list-style: none; margin: 0; padding: 0; }
+  .cabecera__nav a {
+    display: flex; align-items: center; gap: .5rem;
+    min-height: 48px;
+    color: var(--tinta);
+    text-decoration: none;
+  }
+  .cabecera__nav a:hover, .cabecera__nav a[aria-current="page"] { color: var(--rojo); }
+
+  /* Móvil: panel desplegable */
+  @media (max-width: 959px) {
+    .cabecera__nav {
+      position: fixed;
+      inset: calc(max(10px, env(safe-area-inset-top)) + 70px) var(--lateral) auto;
+      padding: 1rem 1.5rem 1.5rem;
+      background: var(--papel);
+      border-radius: calc(var(--radio) * 2);
+      border: 1px solid var(--linea);
+      max-height: calc(100dvh - 100px);
+      overflow-y: auto;
+    }
+    .cabecera__nav:not([data-abierto]) { display: none; }
+    .cabecera__nav li + li { border-top: 1px solid var(--linea); }
+    .cabecera__nav a { font-family: var(--f-display); font-size: 1.45rem; padding-block: .45rem; }
+  }
+
+  /* Escritorio */
+  @media (min-width: 960px) {
+    .cabecera__boton { display: none; }
+    .cabecera__nav ul { display: flex; align-items: center; gap: 1.6rem; }
+    .cabecera__nav a { font-size: var(--t-s); font-weight: 500; }
+    .cabecera__ig a {
+      justify-content: center;
+      width: 48px; border-radius: 50%;
+      background: var(--tinta); color: var(--crema);
+    }
+    .cabecera__ig a:hover { background: var(--rojo); color: var(--crema); }
+    .cabecera__ig-texto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  }
+</style>
+
+<script>
+  // Menú móvil accesible: aria-expanded, cierre con Esc, al pulsar un enlace y bloqueo del scroll.
+  const boton = document.querySelector<HTMLButtonElement>("[data-menu-boton]");
+  const menu = document.querySelector<HTMLElement>("[data-menu]");
+  const texto = document.querySelector<HTMLElement>("[data-menu-texto]");
+  if (boton && menu) {
+    const fijar = (abierto: boolean) => {
+      boton.setAttribute("aria-expanded", String(abierto));
+      if (texto) texto.textContent = abierto ? "Cerrar menú" : "Abrir menú";
+      menu.toggleAttribute("data-abierto", abierto);
+      document.documentElement.classList.toggle("sin-scroll", abierto);
+    };
+    boton.addEventListener("click", () => fijar(boton.getAttribute("aria-expanded") !== "true"));
+    menu.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) fijar(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && boton.getAttribute("aria-expanded") === "true") {
+        fijar(false);
+        boton.focus();
+      }
+    });
+    matchMedia("(min-width: 960px)").addEventListener("change", (e) => e.matches && fijar(false));
+  }
+</script>

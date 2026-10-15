@@ -1,0 +1,11 @@
+# build output
+dist/
+.astro/
+.vercel/
+node_modules/
+npm-debug.log*
+.env
+.env.*
+.DS_Store
+capturas/
+lighthouse/

@@ -7,8 +7,10 @@ interface Props {
   /** "larga" en la página de internet; "corta" en la caja de los viajes. */
   transparencia?: "larga" | "corta";
   id?: string;
+  /** Muestra en qué planes vale el código (solo en la página del código). */
+  condiciones?: boolean;
 }
-const { transparencia = "corta", id = "codigo-glowi" } = Astro.props;
+const { transparencia = "corta", id = "codigo-glowi", condiciones = false } = Astro.props;
 ---
 
 <div class="cupon">
@@ -22,6 +24,7 @@ const { transparencia = "corta", id = "codigo-glowi" } = Astro.props;
   </div>
   <p class="cupon__aviso" role="status" aria-live="polite" data-aviso></p>
   <p class="cupon__nota">Se introduce en la pantalla de pago.</p>
+  {condiciones && <p class="cupon__nota">{GLOWI.condiciones}</p>}
   <p class="cupon__transparencia">
     {
       transparencia === "larga"

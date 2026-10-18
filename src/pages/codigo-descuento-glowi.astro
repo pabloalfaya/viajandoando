@@ -22,6 +22,10 @@ const faq = [
     r: `Copia el código <strong>${GLOWI.codigo}</strong> y pégalo en la pantalla de pago al comprar tu eSIM en Glowi. Tienes un ${GLOWI.descuento} de descuento.`,
   },
   {
+    p: "¿Glowi y glowisim son lo mismo?",
+    r: "Sí. Glowi es la marca y glowisim.com su web. Mi código vale igual.",
+  },
+  {
     p: "¿Mi móvil es compatible con eSIM?",
     r: "Marca <code>*#06#</code>: si aparece un número EID, tu móvil es compatible.",
   },
@@ -42,7 +46,7 @@ const faq = [
 
 <Base
   titulo={`Código descuento Glowi (${GLOWI.descuento}): eSIM para viajar`}
-  descripcion={`Mi código de descuento de Glowi, ${GLOWI.codigo}: un ${GLOWI.descuento} menos en tu eSIM para Marruecos, Turquía y más destinos. Cómo usarlo, cómo funciona y cuántos GB necesitas.`}
+  descripcion={`Mi código de descuento de Glowi (glowisim.com), ${GLOWI.codigo}: un ${GLOWI.descuento} menos en tu eSIM para Marruecos, Turquía y más destinos. Cómo usarlo, cómo funciona y cuántos GB necesitas.`}
   jsonLd={faqJsonLd(faq)}
 >
   <!-- 1. Hero -->
@@ -79,7 +83,7 @@ const faq = [
       <Forma tipo="cuarto" color="verde" tam="clamp(70px, 16vw, 120px)" class="codigo__forma" />
       <h2 id="codigo-titulo">Mi <span class="acento">código</span> de Glowi</h2>
       <p class="codigo__intro">
-        Yo viajo con una eSIM de <strong>Glowi</strong>: la instalo en casa y aterrizo con datos. Con mi código tienes un
+        Yo viajo con una eSIM de <strong>Glowi</strong> (glowisim.com): la instalo en casa y aterrizo con datos. Con mi código tienes un
         {GLOWI.descuento} de descuento.
       </p>
       <CodigoDescuento id="codigo-pagina" transparencia="larga" />

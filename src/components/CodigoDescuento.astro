@@ -7,7 +7,7 @@ interface Props {
   /** "larga" en la página de internet; "corta" en la caja de los viajes. */
   transparencia?: "larga" | "corta";
   id?: string;
-  /** Muestra en qué planes vale el código (solo en la página del código). */
+  /** Muestra en qué planes vale el código. */
   condiciones?: boolean;
 }
 const { transparencia = "corta", id = "codigo-glowi", condiciones = false } = Astro.props;

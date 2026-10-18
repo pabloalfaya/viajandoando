@@ -7,6 +7,7 @@ const UTM = "utm_source=viajandoando&utm_medium=web&utm_campaign=afiliado";
 export const GLOWI = {
   codigo: "VIAJANDOANDO",
   descuento: "10 %",
+  condiciones: "Válido en los planes por GB (no en los planes diarios ilimitados).",
   home: `https://glowisim.com/?${UTM}`,
   compatibilidad: `https://glowisim.com/ayuda/dispositivos-compatibles?${UTM}`,
   // Verificadas el 15/10/2026. Añadir países SOLO tras comprobar que la URL responde 200

@@ -1,7 +1,7 @@
 ---
 // Caja «¿Cómo tendré internet en el viaje?». Va AL FINAL de cada página de viaje o destino,
-// nunca en el layout global. Marruecos (o un país sin URL verificada) → enlace interno.
-import { glowiPais } from "../config/glowi";
+// nunca en el layout global. El botón lleva a la eSIM del país; si no tiene URL verificada, a la portada de Glowi.
+import { GLOWI, glowiPais } from "../config/glowi";
 import CodigoDescuento from "./CodigoDescuento.astro";
 import EnlaceGlowi from "./EnlaceGlowi.astro";
 import Icono from "./Icono.astro";
@@ -11,28 +11,26 @@ interface Props {
   nombre?: string; // nombre visible, p. ej. "Turquía"
 }
 const { pais, nombre = pais } = Astro.props;
-const urlGlowi = pais === "marruecos" ? null : glowiPais(pais);
+const urlGlowi = glowiPais(pais) ?? GLOWI.home;
 ---
 
 <aside class="internet" aria-labelledby="internet-titulo">
   <div class="internet__cabecera">
     <span class="internet__icono"><Icono nombre="senal" tam={20} /></span>
-    <h2 id="internet-titulo">¿Cómo tendré internet en el viaje?</h2>
+    <h2 id="internet-titulo">¿Cómo tendré internet en el viaje? Con Glowi eSIM</h2>
   </div>
   <p class="internet__texto">
-    Yo viajo con una eSIM de Glowi: la instalas antes de salir y tienes datos nada más aterrizar, sin cambiar de número. Con mi
+    Yo viajo con Glowi eSIM: la instalas antes de salir y tienes datos nada más aterrizar, sin cambiar de número. Con mi
     código descuento de Glowi te ahorras un 10&nbsp;%.
   </p>
-  <CodigoDescuento id={`codigo-${pais}`} transparencia="corta" />
-  <p class="internet__enlace">
-    {
-      urlGlowi ? (
-        <EnlaceGlowi href={urlGlowi}>Ver eSIM para {nombre}&nbsp;<span aria-hidden="true">→</span></EnlaceGlowi>
-      ) : (
-        <a href="/codigo-descuento-glowi/">Mi código de Glowi y cómo funciona&nbsp;<span aria-hidden="true">→</span></a>
-      )
-    }
-  </p>
+  <CodigoDescuento id={`codigo-${pais}`} transparencia="corta" condiciones />
+  <div class="internet__acciones">
+    <EnlaceGlowi href={urlGlowi} class="btn" aria-label={`Ir a Glowi eSIM: eSIM para ${nombre}`}>
+      <span>Ir a Glowi eSIM</span>
+      <span class="btn__flecha"><Icono nombre="flecha" tam={18} /></span>
+    </EnlaceGlowi>
+    <a href="/codigo-descuento-glowi/" class="internet__enlace">Mi código de Glowi y cómo funciona&nbsp;<span aria-hidden="true">→</span></a>
+  </div>
 </aside>
 
 <style>
@@ -54,10 +52,10 @@ const urlGlowi = pais === "marruecos" ? null : glowiPais(pais);
     border: 1px dashed var(--verde); color: var(--verde);
   }
   .internet__texto { margin: 0; color: var(--tinta-2); }
-  .internet__enlace { margin: 0; }
-  .internet__enlace a {
+  .internet__acciones { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
+  .internet__enlace {
     display: inline-flex; align-items: center; min-height: 48px;
     font-weight: 600; color: var(--azul);
   }
-  .internet__enlace a:hover { color: var(--rojo); }
+  .internet__enlace:hover { color: var(--rojo); }
 </style>

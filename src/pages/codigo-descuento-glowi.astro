@@ -23,7 +23,7 @@ const faq = [
   },
   {
     p: "¿Glowi y glowisim son lo mismo?",
-    r: "Sí. Glowi es la marca y glowisim.com su web. Mi código vale igual.",
+    r: "Sí. Glowi es la marca y glowisim.com su web. Mi código vale igual. Si buscas «glowi» en Google puede que te corrija a otra marca: entra directamente en glowisim.com.",
   },
   {
     p: "¿Mi móvil es compatible con eSIM?",
@@ -45,19 +45,19 @@ const faq = [
 ---
 
 <Base
-  titulo={`Código descuento Glowi (${GLOWI.descuento}): eSIM para viajar`}
-  descripcion={`Mi código de descuento de Glowi (glowisim.com), ${GLOWI.codigo}: un ${GLOWI.descuento} menos en tu eSIM para Marruecos, Turquía y más destinos. Cómo usarlo, cómo funciona y cuántos GB necesitas.`}
+  titulo={`Código descuento Glowi eSIM (${GLOWI.descuento}) para viajar`}
+  descripcion={`Mi código de descuento de Glowi eSIM (glowisim.com), ${GLOWI.codigo}: un ${GLOWI.descuento} menos en tu eSIM para Marruecos, Turquía y más destinos. Cómo usarlo, cómo funciona y cuántos GB necesitas.`}
   jsonLd={faqJsonLd(faq)}
 >
   <!-- 1. Hero -->
   <section class="ihero" aria-labelledby="ihero-titulo">
     <div class="contenedor ihero__rejilla">
       <div class="ihero__texto">
-        <p class="eyebrow">Código descuento Glowi</p>
-        <h1 id="ihero-titulo">Internet en el <span class="acento">viaje</span></h1>
+        <p class="eyebrow">Internet en el viaje</p>
+        <h1 id="ihero-titulo">Código descuento <span class="acento">Glowi eSIM</span></h1>
         <p class="entradilla">
-          Lo primero que vas a querer hacer al bajar del avión es mandar un «ya he llegado» a casa. Yo lo hago con una eSIM
-          de Glowi, y aquí tienes mi código para que te salga un {GLOWI.descuento} más barata, vayas donde vayas.
+          Lo primero que vas a querer hacer al bajar del avión es mandar un «ya he llegado» a casa. Yo lo hago con Glowi
+          eSIM, y aquí tienes mi código para que te salga un {GLOWI.descuento} más barata, vayas donde vayas.
         </p>
       </div>
       <div class="ihero__foto">
@@ -83,15 +83,16 @@ const faq = [
       <Forma tipo="cuarto" color="verde" tam="clamp(70px, 16vw, 120px)" class="codigo__forma" />
       <h2 id="codigo-titulo">Mi <span class="acento">código</span> de Glowi</h2>
       <p class="codigo__intro">
-        Yo viajo con una eSIM de <strong>Glowi</strong> (glowisim.com): la instalo en casa y aterrizo con datos. Con mi código tienes un
+        Yo viajo con <strong>Glowi eSIM</strong> (glowisim.com): la instalo en casa y aterrizo con datos. Con mi código tienes un
         {GLOWI.descuento} de descuento.
       </p>
-      <CodigoDescuento id="codigo-pagina" transparencia="larga" />
+      <CodigoDescuento id="codigo-pagina" transparencia="larga" condiciones />
       <div class="codigo__acciones">
-        <EnlaceGlowi href={GLOWI.home} class="btn">
-          <span>Ir a Glowi</span>
+        <EnlaceGlowi href={GLOWI.paises.marruecos} class="btn">
+          <span>Ir a Glowi eSIM</span>
           <span class="btn__flecha"><Icono nombre="flecha" tam={18} /></span>
         </EnlaceGlowi>
+        <EnlaceGlowi href={GLOWI.home} class="codigo__secundario">¿Vas a otro destino?</EnlaceGlowi>
         <EnlaceGlowi href={GLOWI.compatibilidad} class="codigo__secundario">¿Mi móvil tiene eSIM?</EnlaceGlowi>
       </div>
       <p class="codigo__truco">

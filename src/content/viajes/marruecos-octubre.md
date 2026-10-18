@@ -3,7 +3,7 @@ titulo: Marruecos
 codigo: VA 001
 pais: Marruecos
 paisSlug: marruecos
-lugar: Marrakech · Desierto de Agafay
+lugar: Marrakech · Ouzoud · Essaouira · Agafay
 frase: 6 días. Cero conocidos. Marruecos.
 cita: Igual llegas sin conocer a nadie y vuelves con amigos para toda la vida.
 descripcion: Viaje en grupo a Marruecos del 28 de octubre al 2 de noviembre de 2026 por 450 €. Transfers, alojamiento, algunas comidas, guías locales y muchas sorpresas.
@@ -50,26 +50,25 @@ noIncluye:
   - Vuelos (nunca están incluidos ✈️)
   - Las comidas que no estén incluidas (te digo cuáles)
   - Internet en el viaje (te cuento cómo lo hago yo más abajo)
-# EJEMPLO — sustituir por el real (itinerario)
 itinerario:
   - dia: Día 1 · 28 oct
     titulo: Llegada a Marrakech
-    texto: "EJEMPLO — sustituir por el real. Nos encontramos, dejamos las maletas y primera vuelta por la medina para ir abriendo boca."
+    texto: Nos encontramos, dejamos las maletas y empezamos a conocernos.
   - dia: Día 2 · 29 oct
-    titulo: La medina sin prisas
-    texto: "EJEMPLO — sustituir por el real. Callejones, puertas imposibles, zocos y el primer regateo del grupo (que siempre sale regular)."
+    titulo: Marrakech con guía local
+    texto: Tour con guía local y paseo por la medina para comprar cositas (y estrenar el regateo).
   - dia: Día 3 · 30 oct
-    titulo: Desierto de Agafay
-    texto: "EJEMPLO — sustituir por el real. Quads, camellos y atardecer en el desierto."
-  - dia: Día 4 · 31 oct
     titulo: Cascadas de Ouzoud
-    texto: "EJEMPLO — sustituir por el real. Excursión de día a las cascadas. Lleva calzado cómodo."
+    texto: Excursión con guía local a las cascadas. Lleva bikini o bañador.
+  - dia: Día 4 · 31 oct
+    titulo: "Essaouira: surf y medina"
+    texto: Nos vamos a Essaouira a hacer surf y a pasear por su medina junto al mar.
   - dia: Día 5 · 1 nov
-    titulo: Más sorpresas
-    texto: "EJEMPLO — sustituir por el real. Un día para lo que surja (y alguna sorpresa)."
+    titulo: Desierto de Agafay
+    texto: Día de desierto en Agafay.
   - dia: Día 6 · 2 nov
-    titulo: Vuelta a casa
-    texto: "EJEMPLO — sustituir por el real. Último té a la menta y vuelta con mil historias que contar."
+    titulo: Nos vamos
+    texto: Último té a la menta y vuelta a casa con mil historias que contar.
 faq:
   - p: ¿Necesito pasaporte para ir a Marruecos?
     # TODO: que Amalia confirme los requisitos de entrada

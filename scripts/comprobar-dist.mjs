@@ -2,7 +2,7 @@
 // 1) Todo <a> con href a glowisim.com lleva target="_blank" y rel="sponsored noopener".
 // 2) Ningún enlace a glowisim.com dentro de <header> ni <footer>.
 // 3) No hay precios de Glowi: ninguna cifra con «€» cerca de «eSIM».
-// 4) glowisim.com solo aparece en /internet-en-el-viaje/ y en las páginas de viaje.
+// 4) glowisim.com solo aparece en /codigo-descuento-glowi/ y en las páginas de viaje.
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -42,7 +42,7 @@ for await (const archivo of html(DIST)) {
     const entorno = texto.slice(Math.max(0, m.index - 200), m.index + 200);
     if (/\d[\d.,\s]*€|€\s*\d/.test(entorno)) errores.push(`${ruta}: posible precio cerca de «eSIM»: …${entorno.replace(/\s+/g, " ").trim()}…`);
   }
-  if (src.includes("glowisim.com") && !(ruta === "/internet-en-el-viaje/" || ruta.startsWith("/viajes/") && ruta !== "/viajes/")) {
+  if (src.includes("glowisim.com") && !(ruta === "/codigo-descuento-glowi/" || ruta.startsWith("/viajes/") && ruta !== "/viajes/")) {
     errores.push(`${ruta}: menciona glowisim.com fuera de las páginas permitidas`);
   }
 }

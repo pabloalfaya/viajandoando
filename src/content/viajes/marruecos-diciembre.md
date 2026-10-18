@@ -1,13 +1,13 @@
 ---
 # ------------------------------------------------------------------
 # Segundo viaje a Marruecos: 4 – 9 dic, 450 €. Faltan qué incluye,
-# itinerario, plazas y alojamiento (TODO: Amalia).
+# plazas y alojamiento (TODO: Amalia).
 # ------------------------------------------------------------------
 titulo: Marruecos
 codigo: VA 002
 pais: Marruecos
 paisSlug: marruecos
-lugar: Marrakech · Desierto de Agafay
+lugar: Marrakech · Ouzoud · Essaouira · Agafay
 frase: 6 días. Cero conocidos. Marruecos.
 cita: Si algo te da un poquito de miedo, a veces merece la pena hacerlo igualmente.
 descripcion: Viaje en grupo a Marruecos del 4 al 9 de diciembre de 2026 por 450 €, para gente que no se conoce. Medina de Marrakech, desierto y mucho más, con todo organizado.
@@ -41,11 +41,25 @@ incluye: []
 noIncluye:
   - Vuelos (nunca están incluidos ✈️)
   - Internet en el viaje (te cuento cómo lo hago yo más abajo)
-# TODO: itinerario real día a día
 itinerario:
-  - dia: Del 4 al 9 de diciembre
-    titulo: El plan día a día, muy pronto
-    texto: Estoy cerrando el itinerario. En cuanto esté, lo verás aquí.
+  - dia: Día 1 · 4 dic
+    titulo: Llegada a Marrakech
+    texto: Nos encontramos, dejamos las maletas y empezamos a conocernos.
+  - dia: Día 2 · 5 dic
+    titulo: Marrakech con guía local
+    texto: Tour con guía local y paseo por la medina para comprar cositas (y estrenar el regateo).
+  - dia: Día 3 · 6 dic
+    titulo: Cascadas de Ouzoud
+    texto: Excursión con guía local a las cascadas. Lleva bikini o bañador.
+  - dia: Día 4 · 7 dic
+    titulo: "Essaouira: surf y medina"
+    texto: Nos vamos a Essaouira a hacer surf y a pasear por su medina junto al mar.
+  - dia: Día 5 · 8 dic
+    titulo: Desierto de Agafay
+    texto: Día de desierto en Agafay.
+  - dia: Día 6 · 9 dic
+    titulo: Nos vamos
+    texto: Último té a la menta y vuelta a casa con mil historias que contar.
 faq:
   - p: ¿Necesito pasaporte para ir a Marruecos?
     # TODO: que Amalia confirme los requisitos de entrada

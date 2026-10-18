@@ -20,8 +20,8 @@ const urlGlowi = pais === "marruecos" ? null : glowiPais(pais);
     <h2 id="internet-titulo">¿Cómo tendré internet en el viaje?</h2>
   </div>
   <p class="internet__texto">
-    Yo viajo con una eSIM: la instalas antes de salir y tienes datos nada más aterrizar, sin cambiar de número. Con mi
-    código te ahorras un 10&nbsp;%.
+    Yo viajo con una eSIM de Glowi: la instalas antes de salir y tienes datos nada más aterrizar, sin cambiar de número. Con mi
+    código descuento de Glowi te ahorras un 10&nbsp;%.
   </p>
   <CodigoDescuento id={`codigo-${pais}`} transparencia="corta" />
   <p class="internet__enlace">
@@ -29,7 +29,7 @@ const urlGlowi = pais === "marruecos" ? null : glowiPais(pais);
       urlGlowi ? (
         <EnlaceGlowi href={urlGlowi}>Ver eSIM para {nombre}&nbsp;<span aria-hidden="true">→</span></EnlaceGlowi>
       ) : (
-        <a href="/internet-en-el-viaje/">Cómo funciona&nbsp;<span aria-hidden="true">→</span></a>
+        <a href="/codigo-descuento-glowi/">Mi código de Glowi y cómo funciona&nbsp;<span aria-hidden="true">→</span></a>
       )
     }
   </p>

@@ -21,6 +21,6 @@ Crea `src/content/viajes/<slug>.md` siguiendo `marruecos.md`. El esquema está e
 
 - Las URLs solo están en `src/config/glowi.ts`.
 - Todo enlace a Glowi pasa por `EnlaceGlowi.astro`, que pone `target="_blank" rel="sponsored noopener"`.
-- Glowi solo aparece en `/internet-en-el-viaje/`, en la caja `<InternetViaje>` al final de cada viaje y en la pregunta 7 de la FAQ (como enlace interno). Nunca en la cabecera, el pie ni zonas comunes, y sin precios.
+- Glowi solo aparece en `/codigo-descuento-glowi/`, en la caja `<InternetViaje>` al final de cada viaje y en la pregunta 7 de la FAQ (como enlace interno). Nunca en la cabecera, el pie ni zonas comunes, y sin precios.
 
 Datos pendientes: ver [TODO.md](./TODO.md).

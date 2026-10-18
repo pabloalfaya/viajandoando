@@ -3,6 +3,11 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/internet-en-el-viaje/",
+      "destination": "/codigo-descuento-glowi/",
+      "permanent": true
+    },
+    {
       "source": "/viajes/marruecos-noviembre/",
       "destination": "/viajes/marruecos-octubre/",
       "permanent": true

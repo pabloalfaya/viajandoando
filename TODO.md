@@ -3,7 +3,7 @@
 Mientras falten estos datos, la web funciona con alternativas: «Fechas y precio muy pronto», el CTA «Avísame por Instagram» y el enlace a instagram.com sin usuario.
 
 ## Configuración (`src/config/site.ts`)
-- [ ] **Dominio propio**: ahora se usa https://viajandoando-seven.vercel.app. Si se compra dominio, cambiar `SITE.dominio` y `DOMINIO` en `astro.config.mjs`.
+- [x] Dominio propio: https://www.andoviajando.link (`SITE.dominio` y `DOMINIO` en `astro.config.mjs`).
 - [x] Instagram: viajandoand013 (hecho).
 - [x] WhatsApp: +34 673 62 83 34 (hecho). Botón fijo abajo a la derecha en todas las páginas. Si se quiere que el botón «Reserva tu plaza» lleve a WhatsApp en vez de a Instagram: `SITE.reservaVia = "whatsapp"`.
 - [ ] **Email** de contacto (`SITE.email`).

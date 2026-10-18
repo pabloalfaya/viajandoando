@@ -1,5 +1,5 @@
 ---
-// Página «Internet en el viaje» (acuerdo con Glowi). Reglas: enlaces a Glowi SOLO mediante <EnlaceGlowi>
+// Página «Código descuento Glowi» (antes /internet-en-el-viaje/, con redirección en vercel.json). Acuerdo con Glowi. Reglas: enlaces a Glowi SOLO mediante <EnlaceGlowi>
 // (rel="sponsored noopener"), transparencia junto al código, sin precios, sin pop-ups ni banners.
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
@@ -7,25 +7,54 @@ import CodigoDescuento from "../components/CodigoDescuento.astro";
 import EnlaceGlowi from "../components/EnlaceGlowi.astro";
 import Forma from "../components/Forma.astro";
 import Icono from "../components/Icono.astro";
+import Preguntas from "../components/Preguntas.astro";
 import { GLOWI } from "../config/glowi";
+import { faqJsonLd } from "../data/preguntas";
 import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
+
+// Nombres visibles de los destinos con URL verificada en GLOWI.paises.
+const NOMBRES: Record<string, string> = { marruecos: "Marruecos", turquia: "Turquía", egipto: "Egipto" };
+const destinos = Object.entries(GLOWI.paises).map(([slug, href]) => ({ nombre: NOMBRES[slug] ?? slug, href }));
+
+const faq = [
+  {
+    p: "¿Cómo uso el código descuento de Glowi?",
+    r: `Copia el código <strong>${GLOWI.codigo}</strong> y pégalo en la pantalla de pago al comprar tu eSIM en Glowi. Tienes un ${GLOWI.descuento} de descuento.`,
+  },
+  {
+    p: "¿Mi móvil es compatible con eSIM?",
+    r: "Marca <code>*#06#</code>: si aparece un número EID, tu móvil es compatible.",
+  },
+  {
+    p: "¿Pierdo mi número de teléfono?",
+    r: "No. Sigues teniendo tu número de siempre para llamadas y SMS: la eSIM solo pone los datos.",
+  },
+  {
+    p: "¿Cuándo empieza a contar el plan?",
+    r: "Cuando te conectas por primera vez en el país de destino, no cuando lo compras.",
+  },
+  {
+    p: "¿Cuántos GB necesito?",
+    r: "Para una semana con WhatsApp, mapas y redes, unos 3–5 GB. Si subes muchas fotos y vídeos, mejor 10 GB.",
+  },
+];
 ---
 
 <Base
-  titulo="Internet en el viaje: cómo tener datos en Marruecos"
-  descripcion="Cómo tengo internet en Marruecos sin roaming ni sustos: una eSIM que instalas antes de salir. Te explico cómo funciona, cuántos GB necesitas y mi código de descuento."
+  titulo={`Código descuento Glowi (${GLOWI.descuento}): eSIM para viajar`}
+  descripcion={`Mi código de descuento de Glowi, ${GLOWI.codigo}: un ${GLOWI.descuento} menos en tu eSIM para Marruecos, Turquía y más destinos. Cómo usarlo, cómo funciona y cuántos GB necesitas.`}
+  jsonLd={faqJsonLd(faq)}
 >
   <!-- 1. Hero -->
   <section class="ihero" aria-labelledby="ihero-titulo">
     <div class="contenedor ihero__rejilla">
       <div class="ihero__texto">
-        <p class="eyebrow">Antes de salir</p>
+        <p class="eyebrow">Código descuento Glowi</p>
         <h1 id="ihero-titulo">Internet en el <span class="acento">viaje</span></h1>
         <p class="entradilla">
-          Lo primero que vas a querer hacer al bajar del avión es mandar un «ya he llegado» a casa. Te cuento cómo lo hago
-          yo para tener internet en Marruecos sin sustos.
+          Lo primero que vas a querer hacer al bajar del avión es mandar un «ya he llegado» a casa. Yo lo hago con una eSIM
+          de Glowi, y aquí tienes mi código para que te salga un {GLOWI.descuento} más barata, vayas donde vayas.
         </p>
-        <a href="#codigo" class="ihero__ancla">Ir al código <Icono nombre="abajo" tam={18} /></a>
       </div>
       <div class="ihero__foto">
         <Forma tipo="circulo" color="azul" tam="clamp(80px, 20vw, 130px)" class="ihero__circulo" />
@@ -44,14 +73,37 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
     </div>
   </section>
 
-  <!-- 2. Por qué hace falta -->
+  <!-- 2. Código (arriba, justo tras el hero) -->
+  <section id="codigo" class="seccion codigo" aria-labelledby="codigo-titulo">
+    <div class="contenedor codigo__caja">
+      <Forma tipo="cuarto" color="verde" tam="clamp(70px, 16vw, 120px)" class="codigo__forma" />
+      <h2 id="codigo-titulo">Mi <span class="acento">código</span> de Glowi</h2>
+      <p class="codigo__intro">
+        Yo viajo con una eSIM de <strong>Glowi</strong>: la instalo en casa y aterrizo con datos. Con mi código tienes un
+        {GLOWI.descuento} de descuento.
+      </p>
+      <CodigoDescuento id="codigo-pagina" transparencia="larga" />
+      <div class="codigo__acciones">
+        <EnlaceGlowi href={GLOWI.home} class="btn">
+          <span>Ir a Glowi</span>
+          <span class="btn__flecha"><Icono nombre="flecha" tam={18} /></span>
+        </EnlaceGlowi>
+        <EnlaceGlowi href={GLOWI.compatibilidad} class="codigo__secundario">¿Mi móvil tiene eSIM?</EnlaceGlowi>
+      </div>
+      <p class="codigo__truco">
+        <strong>Truco:</strong> marca <code>*#06#</code>. Si aparece un número EID, tu móvil es compatible.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. Por qué hace falta -->
   <section class="seccion" aria-labelledby="porque-titulo">
     <div class="contenedor texto">
       <p class="eyebrow">Por qué hace falta</p>
-      <h2 id="porque-titulo">Marruecos está fuera de la <span class="acento">UE</span></h2>
+      <h2 id="porque-titulo">Fuera de la <span class="acento">UE</span>, cuidado con el roaming</h2>
       <p class="entradilla">
-        Así que tu tarifa española no incluye roaming allí, y la factura a la vuelta puede dar más miedo que el primer
-        regateo en el zoco.
+        En destinos como Marruecos o Turquía tu tarifa española no suele incluir roaming, y la factura a la vuelta puede
+        dar más miedo que el primer regateo en el zoco.
       </p>
       <p>
         Y la otra opción, ponerte a buscar una SIM en el aeropuerto con todo el grupo esperando y las maletas recién
@@ -60,13 +112,13 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
     </div>
   </section>
 
-  <!-- 3. Qué es una eSIM -->
+  <!-- 4. Qué es una eSIM -->
   <section class="seccion pasos" aria-labelledby="pasos-titulo">
     <div class="contenedor">
       <p class="eyebrow">Qué es una eSIM</p>
       <h2 id="pasos-titulo">Una SIM digital, en <span class="acento">3 pasos</span></h2>
       <p class="texto">
-        Una eSIM es una tarjeta SIM sin plástico: se instala en el móvil y te da datos en el país de destino. Así lo hago yo:
+        Una eSIM es una tarjeta SIM sin plástico: se instala en el móvil y te da datos en el país de destino. Así lo hago yo con Glowi:
       </p>
       <ol class="pasos__lista">
         <li>
@@ -95,10 +147,10 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
     </div>
   </section>
 
-  <!-- 4. En Marruecos -->
+  <!-- 5. En Marruecos -->
   <section class="seccion" aria-labelledby="ma-titulo">
     <div class="contenedor">
-      <p class="eyebrow">En Marruecos</p>
+      <p class="eyebrow">Si vienes a Marruecos</p>
       <h2 id="ma-titulo">Lo que me <span class="acento">importa</span> allí</h2>
       <ul class="chips">
         <li>
@@ -113,7 +165,7 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
     </div>
   </section>
 
-  <!-- 5. Cuántos GB -->
+  <!-- 6. Cuántos GB -->
   <section class="seccion gb" aria-labelledby="gb-titulo">
     <div class="contenedor">
       <p class="eyebrow">Orientación</p>
@@ -133,30 +185,33 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
     </div>
   </section>
 
-  <!-- 6. Código -->
-  <section id="codigo" class="seccion codigo" aria-labelledby="codigo-titulo">
-    <div class="contenedor codigo__caja">
-      <Forma tipo="cuarto" color="verde" tam="clamp(70px, 16vw, 120px)" class="codigo__forma" />
-      <h2 id="codigo-titulo">Mi <span class="acento">código</span></h2>
-      <CodigoDescuento id="codigo-pagina" transparencia="larga" />
-      <div class="codigo__acciones">
-        <EnlaceGlowi href={GLOWI.paises.marruecos} class="btn">
-          <span>Ver eSIM para Marruecos</span>
-          <span class="btn__flecha"><Icono nombre="flecha" tam={18} /></span>
-        </EnlaceGlowi>
-        <EnlaceGlowi href={GLOWI.compatibilidad} class="codigo__secundario">¿Mi móvil tiene eSIM?</EnlaceGlowi>
-      </div>
-      <p class="codigo__truco">
-        <strong>Truco:</strong> marca <code>*#06#</code>. Si aparece un número EID, tu móvil es compatible.
-      </p>
+  <!-- 7. Preguntas -->
+  <section class="seccion" aria-labelledby="gfaq-titulo">
+    <div class="contenedor gfaq">
+      <h2 id="gfaq-titulo">Preguntas sobre el <span class="acento">código</span></h2>
+      <Preguntas preguntas={faq} />
     </div>
   </section>
 
-  <!-- 7. Cierre -->
-  <section class="seccion cierre-i" aria-label="Otros destinos">
-    <div class="contenedor texto">
+  <!-- 8. Destinos -->
+  <section class="seccion destinos" aria-labelledby="destinos-titulo">
+    <div class="contenedor">
+      <p class="eyebrow">Vayas donde vayas</p>
+      <h2 id="destinos-titulo">eSIM de Glowi por <span class="acento">destino</span></h2>
+      <ul class="destinos__lista">
+        {
+          destinos.map((d) => (
+            <li>
+              <EnlaceGlowi href={d.href} class="destinos__enlace">
+                <span>eSIM para {d.nombre}</span>
+                <Icono nombre="flecha" tam={18} />
+              </EnlaceGlowi>
+            </li>
+          ))
+        }
+      </ul>
       <p class="cierre-i__texto">
-        ¿Vas a otro destino? <EnlaceGlowi href={GLOWI.home}>Glowi</EnlaceGlowi> tiene eSIM para muchos países.
+        ¿Vas a otro sitio? <EnlaceGlowi href={GLOWI.home}>Glowi</EnlaceGlowi> tiene eSIM para muchos países.
       </p>
     </div>
   </section>
@@ -167,10 +222,6 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
   .ihero { padding-block: 8.5rem 3rem; overflow: hidden; }
   .ihero__rejilla { display: grid; gap: 3rem; align-items: center; }
   .ihero h1 { font-size: var(--t-xxl); line-height: .95; }
-  .ihero__ancla {
-    display: inline-flex; align-items: center; gap: .5rem; min-height: 48px;
-    font-weight: 600; color: var(--azul);
-  }
   .ihero__foto { position: relative; max-width: 420px; width: calc(100% - 14px); justify-self: center; }
   .ihero__foto .arco { aspect-ratio: 816 / 1150; }
   .ihero__circulo { position: absolute; z-index: 2; left: -12px; top: 18%; }
@@ -241,10 +292,26 @@ import fotoPuerta from "../assets/fotos/amalia-puerta-mezquita-recorte.jpg";
   }
   .codigo__forma { position: absolute; right: var(--lateral); top: -1rem; }
   .codigo h2 { margin: 0; }
+  .codigo__intro { margin: 0; font-size: var(--t-l); }
   .codigo__acciones { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
   .codigo__secundario { display: inline-flex; align-items: center; min-height: 48px; font-weight: 600; }
   .codigo__truco { margin: 0; color: var(--tinta-2); font-size: var(--t-s); }
   .codigo__truco code { font-family: var(--f-display); font-weight: 600; color: var(--tinta); }
+
+  /* Preguntas */
+  .gfaq { display: grid; gap: 2rem; max-width: calc(52rem + 2 * var(--lateral)); }
+
+  /* Destinos */
+  .destinos { background: var(--papel); }
+  .destinos__lista { list-style: none; padding: 0; margin: 2rem 0; display: grid; gap: 1rem; }
+  .destinos__lista :global(.destinos__enlace) {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 56px;
+    padding: .9rem 1.25rem;
+    border: 1px solid var(--linea); border-radius: var(--radio); background: var(--crema);
+    font-family: var(--f-display); font-weight: 600; font-size: var(--t-l); color: var(--tinta);
+  }
+  .destinos__lista :global(.destinos__enlace:hover) { color: var(--rojo); }
+  @media (min-width: 760px) { .destinos__lista { grid-template-columns: repeat(3, 1fr); } }
 
   .cierre-i__texto { font-family: var(--f-display); font-weight: 500; font-size: var(--t-l); margin: 0; }
   .cierre-i__texto :global(a) { font-weight: 600; }

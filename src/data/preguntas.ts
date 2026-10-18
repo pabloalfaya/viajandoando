@@ -29,7 +29,7 @@ export const PREGUNTAS = [
   {
     p: "¿Cómo tendré internet en el viaje?",
     // Enlace interno, nunca directo a Glowi.
-    r: 'Te lo cuento todo en <a href="/internet-en-el-viaje/">Internet en el viaje</a>.',
+    r: 'Te lo cuento todo en <a href="/codigo-descuento-glowi/">mi página de internet en el viaje</a>, con mi código de descuento de Glowi.',
   },
 ];
 
